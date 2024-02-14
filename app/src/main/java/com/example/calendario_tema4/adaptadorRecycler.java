@@ -34,4 +34,6 @@ public class adaptadorRecycler extends RecyclerView.Adapter<ElViewHolder> {
     public int getItemCount() {
         return losEntrenamientos.length;
     }
+
+
 }

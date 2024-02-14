@@ -32,5 +32,6 @@ public class ElViewHolder extends RecyclerView.ViewHolder {
                 }
             }
         });
+
     }
 }
