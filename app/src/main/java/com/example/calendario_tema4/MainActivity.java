@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
         adaptadorRecycler eladaptador = new adaptadorRecycler(diaMes,imagenes);
         laLista.setAdapter(eladaptador);
 
-        RecyclerView.LayoutManager elLayoutRejillaIgual= new GridLayoutManager(this,7);
+        RecyclerView.LayoutManager elLayoutRejillaIgual= new GridLayoutManager(this,7,GridLayoutManager.VERTICAL,false);
         laLista.setLayoutManager(elLayoutRejillaIgual);
 
     }

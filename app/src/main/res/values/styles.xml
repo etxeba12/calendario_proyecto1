@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="LetraTexto">
+        <item name="android:fontFamily">sans-serif-smallcaps</item>
+        <item name="android:textColor">#f00350</item>
+    </style>
+
+    <style name="mainActivity" parent="Theme.AppCompat">
+        <item name="colorPrimary">#1abade</item>
+        <item name="colorPrimaryDark">#f4f4f4</item>
+    </style>
+
+    <style name="linearlayoutMenu">
+        <item name="android:background">@drawable/borde_redondo</item>
+    </style>
+
+    <style name="botonMenu">
+        <item name="android:background">@drawable/borde_redondo_boton</item>
+    </style>
+
+</resources>
