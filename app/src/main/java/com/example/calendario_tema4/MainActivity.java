@@ -12,13 +12,28 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+
+import java.text.DateFormatSymbols;
+import java.text.SimpleDateFormat;
+import java.time.YearMonth;
+import java.util.Date;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
+
+    private String dia ;
+    private String mes;
+    private String año;
+    private String fecha;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,18 +42,62 @@ public class MainActivity extends AppCompatActivity {
 
         solicitarPermisosNotificaciones(); //Pedimos permisos, si todavia no tiene
 
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            String pMes= extras.getString("mes");
+            String pAño= extras.getString("año");
+            mes =pMes;
+            año=pAño;
+            fecha = "00/" + mes + "/"+ año;
+        }
         RecyclerView laLista = findViewById(R.id.rv);
         int[] imagenes= {R.drawable.pesa, R.drawable.pesa, R.drawable.descanso, R.drawable.pesa, R.drawable.descanso,R.drawable.pesa, R.drawable.pesa, R.drawable.descanso, R.drawable.pesa, R.drawable.descanso,R.drawable.descanso,
                 R.drawable.pesa, R.drawable.pesa, R.drawable.descanso, R.drawable.pesa, R.drawable.descanso,R.drawable.pesa, R.drawable.pesa, R.drawable.descanso, R.drawable.pesa, R.drawable.descanso,R.drawable.descanso,
                 R.drawable.pesa, R.drawable.pesa, R.drawable.descanso, R.drawable.pesa, R.drawable.descanso,R.drawable.pesa, R.drawable.pesa, R.drawable.descanso, R.drawable.pesa};
-        String[] diaMes = new String[31];
-        for (int i = 0; i < 31; i++) {
+
+        //Conseguir y poner fecha
+        if(mes==null || año==null) {
+            fecha =consigueFecha();
+        }
+        String[] fechaLista = fecha.split("/");
+        mes = fechaLista[1];
+        año = fechaLista[2];
+        TextView tv = findViewById(R.id.fecha);
+        tv.setText(obtenerNombreMes(Integer.parseInt(mes)) + " "+ año);
+        String[] diaMes = new String[obtenerDiasMes(Integer.parseInt(mes),Integer.parseInt(año))];
+        for (int i = 0; i < diaMes.length ; i++) {
             diaMes[i] = String.valueOf(i + 1);
         }
+        //Conseguir y poner fecha
 
-        for (int i = 0; i < diaMes.length; i++) {
-            Log.d("MainActivity", "Dia: " + diaMes[i] + ", Imagen: " + imagenes[i]);
-        }
+        //Botones navegación
+        Button botonAnt = findViewById(R.id.bt_ant);
+        botonAnt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int MesNum = Integer.parseInt(mes) - 1;
+                Intent i = getIntent();
+                i.putExtra("mes",Integer.toString(MesNum));
+                i.putExtra("año",año);
+                finish();
+                startActivity(i);
+            }
+        });
+        Button botonSig = findViewById(R.id.bt_sig);
+        botonSig.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int MesNum = Integer.parseInt(mes) + 1;
+                Intent i = getIntent();
+                i.putExtra("mes",Integer.toString(MesNum));
+                i.putExtra("año",año);
+                finish();
+                startActivity(i);
+
+            }
+        });
+        //Botones navegación
+
         adaptadorRecycler eladaptador = new adaptadorRecycler(diaMes,imagenes);
         laLista.setAdapter(eladaptador);
 
@@ -70,6 +129,25 @@ public class MainActivity extends AppCompatActivity {
         }
         elManager.notify(1, elBuilder.build());
     }
+    private String consigueFecha(){
+        Date fechaActual = new Date();
+        SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
+        String fechaFormateada = formatoFecha.format(fechaActual);
+        return fechaFormateada;
+    }
+
+    private String obtenerNombreMes(int numeroMes) {
+        Locale locale = new Locale("es", "ES");
+        DateFormatSymbols symbols = new DateFormatSymbols(locale);
+        String[] nombresMeses = symbols.getMonths();
+        return nombresMeses[numeroMes - 1];
+    }
+
+    private int obtenerDiasMes(int mes, int año) {
+        YearMonth añoMes = YearMonth.of(año, mes);
+        return añoMes.lengthOfMonth();
+    }
+
     public void onBackPressed() {
         DialogFragment dialogoAlerta = new salirAplicacion();
         dialogoAlerta.show(getSupportFragmentManager(), "etiqueta");

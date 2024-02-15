@@ -32,7 +32,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/bt_ant"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -40,11 +40,11 @@
             android:layout_marginBottom="4dp"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
-            android:text="Button"
+            android:text="@string/bt_anterior"
             style="@style/botonMenu"/>
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/fecha"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
@@ -56,7 +56,7 @@
             android:gravity="center"/>
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/bt_sig"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -64,7 +64,7 @@
             android:layout_marginBottom="4dp"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
-            android:text="Button"
+            android:text="@string/bt_siguiente"
             style="@style/botonMenu"/>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

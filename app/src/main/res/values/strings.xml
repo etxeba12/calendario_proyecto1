@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">CALENDARIO DE ENTRENAMIENTO</string>
+    <string name="bt_siguiente"> Siguiente </string>
+    <string name="bt_anterior"> Anterior </string>
 </resources>

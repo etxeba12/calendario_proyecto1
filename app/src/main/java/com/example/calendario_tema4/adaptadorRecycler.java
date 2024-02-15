@@ -13,6 +13,8 @@ public class adaptadorRecycler extends RecyclerView.Adapter<ElViewHolder> {
     private int[] lasImagenes;
     private boolean[] seleccionados;
 
+
+
     public adaptadorRecycler(String[] entrenos, int[] imagenes){
         losEntrenamientos=entrenos;
         lasImagenes=imagenes;
@@ -28,7 +30,6 @@ public class adaptadorRecycler extends RecyclerView.Adapter<ElViewHolder> {
     public void onBindViewHolder(@NonNull ElViewHolder holder, int position) {
         holder.textoDia.setText(losEntrenamientos[position]);
         holder.imagenPesa.setImageResource(lasImagenes[position]);
-        Log.d("adaptadorRecycler", "Posición: " + position + ", Dia: " + losEntrenamientos[position] + ", Imagen: " + lasImagenes[position]);
     }
     @Override
     public int getItemCount() {
