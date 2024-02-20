@@ -59,7 +59,7 @@
             android:gravity="center"/>
 
         <EditText
-            android:id="@+id/editTextText4"
+            android:id="@+id/meterContra"
             android:layout_width="220dp"
             android:layout_height="30dp"
             android:ems="10"
