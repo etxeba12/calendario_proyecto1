@@ -4,6 +4,7 @@ import static android.icu.text.ListFormatter.Type.AND;
 
 import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 
 public class Registro extends AppCompatActivity {
     private SQLiteDatabase db;
@@ -31,26 +33,45 @@ public class Registro extends AppCompatActivity {
                 EditText contra1 = findViewById(R.id.meterContra);
                 EditText contra2 = findViewById(R.id.meterContra2);
                 CheckBox entrenador = findViewById(R.id.esEntrenador);
-                if(nombreUsu.getText().toString() != ""){
-                    if(contra1.getText().toString() != "" && contra2.getText().toString() != ""){
+                if(!nombreUsu.getText().toString().equals("")){
+                    if(!contra1.getText().toString().equals("") && !contra2.getText().toString().equals("")){
                         if(contra1.getText().toString().equals(contra2.getText().toString())){
-                            if(entrenador.isChecked()){
-                                meterUsuario(nombreUsu.getText().toString(),contra1.getText().toString(),1);
+                            if(!GestorDB.comprobarUsuario(db,nombreUsu.getText().toString())){
+                                if(entrenador.isChecked()){
+                                    GestorDB.meterUsuario(db,nombreUsu.getText().toString(),contra1.getText().toString(),1);
+                                }else{
+                                    GestorDB.meterUsuario(db,nombreUsu.getText().toString(),contra1.getText().toString(),0);
+                                }
+                                Intent i = new Intent(Registro.this, Login.class);
+                                startActivity(i);
+                                finish();
                             }else{
-                                meterUsuario(nombreUsu.getText().toString(),contra1.getText().toString(),0);
+                                dialogoAlerta dialogo = new dialogoAlerta();
+                                dialogo.setMensaje("Usuario existente, pruebe otro");
+                                dialogo.show(getSupportFragmentManager(), "etiqueta");
                             }
-                            Intent i = new Intent(Registro.this, Login.class);
-                            startActivity(i);
-                            finish();
+
                         }else{
                             //las contraseñas no coinciden
+                            dialogoAlerta dialogo = new dialogoAlerta();
+                            dialogo.setMensaje("Las contraseñas no coinciden");
+                            dialogo.show(getSupportFragmentManager(), "etiqueta");
                         }
                     }else{
                         //hacer que salga una pantallita diciendo que las contraseñas no puede estar vacias
+                        dialogoAlerta dialogo = new dialogoAlerta();
+                        dialogo.setMensaje("Las contraseñas no pueden estar vacias");
+                        dialogo.show(getSupportFragmentManager(), "etiqueta");
                     }
                 }else{
                     //hacer que salga una pantallita diciendo que el nombre usuario no puede estar vacio
+                    dialogoAlerta dialogo = new dialogoAlerta();
+                    dialogo.setMensaje("El nombre de usuario no puede estar vacio");
+                    dialogo.show(getSupportFragmentManager(), "etiqueta");
                 }
+                nombreUsu.setText("");
+                contra1.setText("");
+                contra2.setText("");
             }
         });
 
@@ -64,17 +85,6 @@ public class Registro extends AppCompatActivity {
                 finish();
             }
         });
-
-    }
-
-    private void meterUsuario(String nombreUsuario, String pContraseña, Integer pEntrenador){
-        ContentValues values = new ContentValues();
-        values.put("nombreUsuarios", nombreUsuario);
-        values.put("contrasena", pContraseña);
-        values.put("entrenador", pEntrenador);
-
-        // Ejecutar la consulta parametrizada
-        db.insert("Usuarios", null, values);
 
     }
 
