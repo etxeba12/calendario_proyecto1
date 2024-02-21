@@ -14,7 +14,8 @@ public class BD extends SQLiteOpenHelper {
     }
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE Usuarios ('nombreUsuarios' VARCHAR(255) PRIMARY KEY NOT NULL, 'contrasena' VARCHAR(255) NOT NULL, 'entrenador' INTEGER)");
+        db.execSQL("CREATE TABLE Usuarios ('nombreUsuarios' VARCHAR(255) PRIMARY KEY NOT NULL, 'contrasena' VARCHAR(255) NOT NULL, 'entrenador' VARCHAR(255) NOT NULL)");
+        db.execSQL("CREATE TABLE Entrenador ('nombreEntrenador' VARCHAR(255) PRIMARY KEY NOT NULL, 'contrasena' VARCHAR(255) NOT NULL)");
 
     }
 
@@ -25,8 +26,11 @@ public class BD extends SQLiteOpenHelper {
 
     }
 
-    public boolean comprobarUsuario(SQLiteDatabase db,String usu) {
+    public boolean comprobarUsuario(SQLiteDatabase db,String usu, boolean entrenador) {
         String query = "SELECT * FROM Usuarios WHERE nombreUsuarios = ?";
+        if(entrenador){
+            query = "SELECT * FROM Entrenador WHERE nombreEntrenador = ?";
+        }
         String[] selectionArgs = {usu};
         Cursor c = db.rawQuery(query, selectionArgs);
         if (c.getCount() != 0) {
@@ -37,7 +41,7 @@ public class BD extends SQLiteOpenHelper {
         return false;
     }
 
-    public void meterUsuario(SQLiteDatabase db,String nombreUsuario, String pContraseña, Integer pEntrenador){
+    public void meterUsuario(SQLiteDatabase db,String nombreUsuario, String pContraseña, String pEntrenador){
         ContentValues values = new ContentValues();
         values.put("nombreUsuarios", nombreUsuario);
         values.put("contrasena", pContraseña);
@@ -46,5 +50,16 @@ public class BD extends SQLiteOpenHelper {
         // Ejecutar la consulta parametrizada
         db.insert("Usuarios", null, values);
     }
+
+    public void meterEntrenador(SQLiteDatabase db,String nombreUsuario, String pContraseña){
+        ContentValues values = new ContentValues();
+        values.put("nombreEntrenador", nombreUsuario);
+        values.put("contrasena", pContraseña);
+
+        // Ejecutar la consulta parametrizada
+        db.insert("Entrenador", null, values);
+    }
+
+
 
 }

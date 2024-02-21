@@ -47,7 +47,6 @@ public class Login extends AppCompatActivity {
                 Intent i = new Intent(Login.this, Registro.class);
                 startActivity(i);
                 finish();
-
             }
         });
     }
