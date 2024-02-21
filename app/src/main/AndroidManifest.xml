@@ -24,6 +24,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".MainActivity" android:launchMode="standard"></activity>
+        <activity android:name=".Registro" android:launchMode="standard"></activity>
     </application>
 
 </manifest>

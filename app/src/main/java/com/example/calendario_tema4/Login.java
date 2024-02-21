@@ -39,6 +39,17 @@ public class Login extends AppCompatActivity {
                 }
             }
         });
+
+        Button btRegistro = findViewById(R.id.Registro);
+        btRegistro.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(Login.this, Registro.class);
+                startActivity(i);
+                finish();
+
+            }
+        });
     }
 
     private boolean comprobarUsuario(String usu, String Contra) {
