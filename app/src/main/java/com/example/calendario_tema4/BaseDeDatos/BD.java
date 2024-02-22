@@ -5,8 +5,12 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class BD extends SQLiteOpenHelper {
     public BD(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
@@ -47,6 +51,39 @@ public class BD extends SQLiteOpenHelper {
         // Ejecutar la consulta parametrizada
         db.insert("Usuarios", null, values);
     }
+
+    public List<String> obtenerListaUsuarios(SQLiteDatabase db, String nombreEntrenador) {
+        List<String> usuarios = new ArrayList<>(); // la lista donde guardar los usuarios
+
+        String query = "SELECT nombreUsuarios FROM Usuarios WHERE entrenador = ?";
+        String[] selectionArgs = {nombreEntrenador};
+        Cursor cursor = db.rawQuery(query, selectionArgs);
+
+        if (cursor.moveToFirst()) {
+            do {
+                String nombreUsuario = cursor.getString(cursor.getColumnIndexOrThrow("nombreUsuarios"));
+                usuarios.add(nombreUsuario);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+
+        return usuarios;
+    }
+    public String obtenerUsuarioEntrenador(SQLiteDatabase db,String pNombre) {
+        String usuario = "";// la lista donde guardar los usuarios
+
+        String query = "SELECT nombreUsuarios FROM Usuarios WHERE nombreUsuarios = ?";
+        String[] selectionArgs = {pNombre};
+        Cursor cursor = db.rawQuery(query, selectionArgs);
+
+        if (cursor.moveToFirst()) {
+            usuario = cursor.getString(cursor.getColumnIndexOrThrow("nombreUsuarios"));
+        }
+        cursor.close();
+
+        return usuario;
+    }
+
 
 
 

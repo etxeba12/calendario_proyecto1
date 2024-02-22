@@ -26,13 +26,12 @@
             android:layout_marginRight="20dp"/>
 
         <EditText
-            android:id="@+id/editTextText"
+            android:id="@+id/NombreAtleta"
             android:layout_width="20dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:ems="10"
             android:inputType="text"
-            android:text="manolo"
             android:layout_marginRight="5dp"/>
 
         <Button
