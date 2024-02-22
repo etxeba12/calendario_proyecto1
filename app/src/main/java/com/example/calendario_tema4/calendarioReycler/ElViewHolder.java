@@ -1,4 +1,4 @@
-package com.example.calendario_tema4;
+package com.example.calendario_tema4.calendarioReycler;
 
 import android.graphics.Color;
 import android.util.Log;
@@ -8,6 +8,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.calendario_tema4.R;
 
 import org.w3c.dom.Text;
 

@@ -1,10 +1,6 @@
 package com.example.calendario_tema4;
 
-import static android.icu.text.ListFormatter.Type.AND;
-
-import android.content.ContentValues;
 import android.content.Intent;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,7 +10,9 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.DialogFragment;
+
+import com.example.calendario_tema4.BaseDeDatos.BD;
+import com.example.calendario_tema4.dialogos.dialogoAlerta;
 
 public class Registro extends AppCompatActivity {
     private SQLiteDatabase db; //base de datos de la tabla usuarios
@@ -23,7 +21,7 @@ public class Registro extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.registro);
 
-        BD GestorDB = new BD(this, "Tablas", null, 1);
+        BD GestorDB = new BD(this, "Tabla", null, 1);
         db = GestorDB.getWritableDatabase();
 
         Button registrobt = findViewById(R.id.Registro);
@@ -39,25 +37,23 @@ public class Registro extends AppCompatActivity {
                     if(!contra1.getText().toString().equals("") && !contra2.getText().toString().equals("")){
                         if(contra1.getText().toString().equals(contra2.getText().toString())){
                             if(entrenador.isChecked()){
-                                if(!GestorDB.comprobarUsuario(db,nombreUsu.getText().toString(),true)) {
-                                    GestorDB.meterEntrenador(db,nombreUsu.getText().toString(),contra1.getText().toString());
+                                if(!GestorDB.comprobarUsuario(db,nombreUsu.getText().toString())) {
+                                    GestorDB.meterUsuario(db,nombreUsu.getText().toString(),contra1.getText().toString(),"",1);
                                     Intent i = new Intent(Registro.this, Login.class);
                                     startActivity(i);
                                     finish();
                                 }else{
-                                    Log.d("hola","hola");
                                     dialogoAlerta dialogo = new dialogoAlerta();
                                     dialogo.setMensaje("Usuario existente, pruebe otro");
                                     dialogo.show(getSupportFragmentManager(), "etiqueta0");
                                 }
                             }else{
-                                if(!GestorDB.comprobarUsuario(db,nombreUsu.getText().toString(),false)) {
-                                    GestorDB.meterUsuario(db,nombreUsu.getText().toString(),contra1.getText().toString(),"");
+                                if(!GestorDB.comprobarUsuario(db,nombreUsu.getText().toString())) {
+                                    GestorDB.meterUsuario(db,nombreUsu.getText().toString(),contra1.getText().toString(),"",0);
                                     Intent i = new Intent(Registro.this, Login.class);
                                     startActivity(i);
                                     finish();
                                 }else{
-                                    Log.d("hola","hola1");
                                     dialogoAlerta dialogo = new dialogoAlerta();
                                     dialogo.setMensaje("Usuario existente, pruebe otro");
                                     dialogo.show(getSupportFragmentManager(), "etiqueta1");

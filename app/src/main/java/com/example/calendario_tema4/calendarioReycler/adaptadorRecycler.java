@@ -1,12 +1,13 @@
-package com.example.calendario_tema4;
+package com.example.calendario_tema4.calendarioReycler;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.calendario_tema4.R;
 
 public class adaptadorRecycler extends RecyclerView.Adapter<ElViewHolder> {
     private String[] losEntrenamientos;

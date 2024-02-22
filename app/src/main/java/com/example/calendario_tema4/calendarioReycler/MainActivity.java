@@ -1,4 +1,4 @@
-package com.example.calendario_tema4;
+package com.example.calendario_tema4.calendarioReycler;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -6,7 +6,6 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.NotificationChannel;
@@ -17,10 +16,13 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.example.calendario_tema4.R;
+import com.example.calendario_tema4.calendarioReycler.adaptadorRecycler;
+import com.example.calendario_tema4.dialogos.salirAplicacion;
 
 import java.text.DateFormatSymbols;
 import java.text.SimpleDateFormat;

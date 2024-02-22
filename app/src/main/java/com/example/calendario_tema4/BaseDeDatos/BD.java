@@ -1,4 +1,4 @@
-package com.example.calendario_tema4;
+package com.example.calendario_tema4.BaseDeDatos;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -14,8 +14,7 @@ public class BD extends SQLiteOpenHelper {
     }
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE Usuarios ('nombreUsuarios' VARCHAR(255) PRIMARY KEY NOT NULL, 'contrasena' VARCHAR(255) NOT NULL, 'entrenador' VARCHAR(255) NOT NULL)");
-        db.execSQL("CREATE TABLE Entrenador ('nombreEntrenador' VARCHAR(255) PRIMARY KEY NOT NULL, 'contrasena' VARCHAR(255) NOT NULL)");
+        db.execSQL("CREATE TABLE Usuarios ('nombreUsuarios' VARCHAR(255) PRIMARY KEY NOT NULL, 'contrasena' VARCHAR(255) NOT NULL, 'entrenador' VARCHAR(255), 'esEntrenador' INTEGER(1) NOT NULL)");
 
     }
 
@@ -26,11 +25,8 @@ public class BD extends SQLiteOpenHelper {
 
     }
 
-    public boolean comprobarUsuario(SQLiteDatabase db,String usu, boolean entrenador) {
+    public boolean comprobarUsuario(SQLiteDatabase db,String usu) {
         String query = "SELECT * FROM Usuarios WHERE nombreUsuarios = ?";
-        if(entrenador){
-            query = "SELECT * FROM Entrenador WHERE nombreEntrenador = ?";
-        }
         String[] selectionArgs = {usu};
         Cursor c = db.rawQuery(query, selectionArgs);
         if (c.getCount() != 0) {
@@ -41,24 +37,17 @@ public class BD extends SQLiteOpenHelper {
         return false;
     }
 
-    public void meterUsuario(SQLiteDatabase db,String nombreUsuario, String pContraseña, String pEntrenador){
+    public void meterUsuario(SQLiteDatabase db,String nombreUsuario, String pContraseña, String pEntrenador, Integer pEsEntrenador){
         ContentValues values = new ContentValues();
         values.put("nombreUsuarios", nombreUsuario);
         values.put("contrasena", pContraseña);
         values.put("entrenador", pEntrenador);
+        values.put("esEntrenador", pEsEntrenador);
 
         // Ejecutar la consulta parametrizada
         db.insert("Usuarios", null, values);
     }
 
-    public void meterEntrenador(SQLiteDatabase db,String nombreUsuario, String pContraseña){
-        ContentValues values = new ContentValues();
-        values.put("nombreEntrenador", nombreUsuario);
-        values.put("contrasena", pContraseña);
-
-        // Ejecutar la consulta parametrizada
-        db.insert("Entrenador", null, values);
-    }
 
 
 

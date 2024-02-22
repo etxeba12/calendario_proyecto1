@@ -1,4 +1,4 @@
-package com.example.calendario_tema4;
+package com.example.calendario_tema4.dialogos;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
