@@ -26,6 +26,7 @@
         <activity android:name=".calendarioReycler.MainActivity" android:launchMode="standard"></activity>
         <activity android:name=".Registro" android:launchMode="standard"></activity>
         <activity android:name=".ListaAtletas" android:launchMode="standard"></activity>
+        <activity android:name=".entrenamiento" android:launchMode="standard"></activity>
     </application>
 
 </manifest>

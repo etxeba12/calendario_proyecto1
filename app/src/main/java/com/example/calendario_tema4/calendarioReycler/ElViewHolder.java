@@ -1,15 +1,23 @@
 package com.example.calendario_tema4.calendarioReycler;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.calendario_tema4.R;
+import com.example.calendario_tema4.entrenamiento;
 
 import org.w3c.dom.Text;
 
@@ -19,23 +27,34 @@ public class ElViewHolder extends RecyclerView.ViewHolder {
     public ImageView imagenPesa;
 
     public boolean[] seleccion;
-    public ElViewHolder (@NonNull View itemView){
+
+    private String mes;
+    private String año;
+
+    private final ActivityResultLauncher<Intent> activityLauncher;
+
+    public ElViewHolder(@NonNull View itemView, ActivityResultLauncher<Intent> activityLauncher,String pMes,String pAño) {
         super(itemView);
-        textoDia=itemView.findViewById(R.id.textoDia);
-        imagenPesa=itemView.findViewById(R.id.imagenPesa);
+        textoDia = itemView.findViewById(R.id.textoDia);
+        imagenPesa = itemView.findViewById(R.id.imagenPesa);
+        this.activityLauncher = activityLauncher;
+        this.mes = pMes;
+        this.año = pAño;
+
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (seleccion[getAdapterPosition()]==true){
-                    seleccion[getAdapterPosition()]=false;
-                    imagenPesa.setColorFilter(null);
-                }
-                else{
-                    seleccion[getAdapterPosition()]=true;
-                    imagenPesa.setColorFilter(Color.RED);
-                }
+                int position = getAdapterPosition();
+
+
+                Intent intent = new Intent(itemView.getContext(), entrenamiento.class);
+                intent.putExtra("mes", mes);
+                intent.putExtra("año", año);
+                intent.putExtra("diaSeleccionado", Integer.toString(position));
+
+                // Lanza la actividad con el ActivityResultLauncher
+                activityLauncher.launch(intent);
             }
         });
-
     }
 }

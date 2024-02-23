@@ -1,5 +1,9 @@
 package com.example.calendario_tema4.calendarioReycler;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
@@ -8,6 +12,7 @@ import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Activity;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
@@ -112,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
         });
         //Botones navegación
 
-        adaptadorRecycler eladaptador = new adaptadorRecycler(diaMes,imagenes);
+        adaptadorRecycler eladaptador = new adaptadorRecycler(diaMes,imagenes,activityLauncher,mes,año);
         laLista.setAdapter(eladaptador);
 
         RecyclerView.LayoutManager elLayoutRejillaIgual= new GridLayoutManager(this,7,GridLayoutManager.VERTICAL,false);
@@ -120,6 +125,18 @@ public class MainActivity extends AppCompatActivity {
 
         crearNotificacion();
     }
+
+    private final ActivityResultLauncher<Intent> activityLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    // Aquí puedes manejar el resultado de la actividad si es necesario
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        // Puedes realizar acciones adicionales si es necesario
+                    }
+                }
+            });
     private void solicitarPermisosNotificaciones(){
         if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.POST_NOTIFICATIONS)!= PackageManager.PERMISSION_GRANTED) {
             //PEDIR EL PERMISO
@@ -165,5 +182,13 @@ public class MainActivity extends AppCompatActivity {
     public void onBackPressed() {
         DialogFragment dialogoAlerta = new salirAplicacion();
         dialogoAlerta.show(getSupportFragmentManager(), "etiqueta");
+    }
+
+    public String getMes(){
+        return this.mes;
+    }
+
+    public String getAño(){
+        return this.año;
     }
 }
