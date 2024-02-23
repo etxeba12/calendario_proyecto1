@@ -78,9 +78,15 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 int MesNum = Integer.parseInt(mes) - 1;
+                int añoNum = Integer.parseInt(año);
+                if(MesNum <= 0){
+                    añoNum --;
+                    MesNum = 12;
+
+                }
                 Intent i = getIntent();
                 i.putExtra("mes",Integer.toString(MesNum));
-                i.putExtra("año",año);
+                i.putExtra("año",Integer.toString(añoNum));
                 finish();
                 startActivity(i);
             }
@@ -90,9 +96,15 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 int MesNum = Integer.parseInt(mes) + 1;
+                int añoNum = Integer.parseInt(año);
+                if(MesNum >= 13){
+                    añoNum ++;
+                    MesNum = 1;
+
+                }
                 Intent i = getIntent();
                 i.putExtra("mes",Integer.toString(MesNum));
-                i.putExtra("año",año);
+                i.putExtra("año",Integer.toString(añoNum));
                 finish();
                 startActivity(i);
 

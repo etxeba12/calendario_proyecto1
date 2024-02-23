@@ -55,11 +55,11 @@ public class ListaAtletas extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 EditText et = findViewById(R.id.NombreAtleta);
-                String nombre = GestorDB.obtenerUsuarioEntrenador(db,et.getText().toString());
-                Log.d("nombre",nombre);
+                String pNombre = GestorDB.obtenerUsuarioEntrenador(db,et.getText().toString());
+                Log.d("nombre",pNombre);
                 lista.clear();
-                if (!nombre.equals("")) {
-                    lista.add(nombre);
+                if (!pNombre.equals("")) {
+                    lista.add(pNombre);
                 }
 
                 eladaptador.notifyDataSetChanged();

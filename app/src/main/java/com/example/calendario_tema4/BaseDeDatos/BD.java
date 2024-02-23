@@ -29,16 +29,19 @@ public class BD extends SQLiteOpenHelper {
 
     }
 
-    public boolean comprobarUsuario(SQLiteDatabase db,String usu) {
+    public String comprobarUsuario(SQLiteDatabase db,String usu) {
         String query = "SELECT * FROM Usuarios WHERE nombreUsuarios = ?";
         String[] selectionArgs = {usu};
+        String esEntrenador = null;
         Cursor c = db.rawQuery(query, selectionArgs);
         if (c.getCount() != 0) {
-            c.close(); // Cerramos el cursor después de usarlo
-            return true;
+            if (c.moveToFirst()) {
+                //si no esta vacio, cogemos la columna "esEntrenador"
+                esEntrenador = c.getString(3);
+            }
         }
         c.close(); // Cerramos el cursor después de usarlo
-        return false;
+        return esEntrenador;
     }
 
     public void meterUsuario(SQLiteDatabase db,String nombreUsuario, String pContraseña, String pEntrenador, Integer pEsEntrenador){
