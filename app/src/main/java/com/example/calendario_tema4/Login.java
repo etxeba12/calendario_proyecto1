@@ -36,12 +36,12 @@ public class Login extends AppCompatActivity {
                 if (valido != null){
                     if (Integer.parseInt(valido)==1){ //comprobamos si es entrenador
                         Intent i = new Intent(Login.this, ListaAtletas.class);
-                        i.putExtra("usuario",usuario.getText().toString());
+                        i.putExtra("entrenador",usuario.getText().toString());
                         startActivity(i);
                         finish();
                     }else{
                         Intent i = new Intent(Login.this, MainActivity.class);
-                        i.putExtra("usuario",usuario.getText().toString());
+                        i.putExtra("atleta",usuario.getText().toString());
                         startActivity(i);
                         finish();
                     }

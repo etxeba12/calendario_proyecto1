@@ -28,6 +28,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.calendario_tema4.BaseDeDatos.BD;
+import com.example.calendario_tema4.ListaAtletas;
 import com.example.calendario_tema4.R;
 import com.example.calendario_tema4.calendarioReycler.adaptadorRecycler;
 import com.example.calendario_tema4.dialogos.salirAplicacion;
@@ -46,7 +47,9 @@ public class MainActivity extends AppCompatActivity {
     private String fecha;
 
     private SQLiteDatabase db;
-    private String nombreUsu;
+    private String nombreAtleta;
+    private String nombreEntrenador;
+    private BD GestorDB = new BD(this, "Tabla", null, 1);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +62,8 @@ public class MainActivity extends AppCompatActivity {
         if (extras != null) {
             String pMes= extras.getString("mes");
             String pAño= extras.getString("año");
-            String pNombre = extras.getString("usuario");
+            String pNombre = extras.getString("atleta");
+            String pEntrenador = extras.getString("entrenador");
             if(pMes != null && pAño != null){
                 if(Integer.parseInt(pMes)<10){
                     mes = "0"+pMes;
@@ -68,11 +72,11 @@ public class MainActivity extends AppCompatActivity {
                 }
                 año=pAño;
             }
-            nombreUsu = pNombre;
+            nombreAtleta = pNombre;
+            nombreEntrenador = pEntrenador;
             fecha = "00/" + mes + "/"+ año;
         }
 
-        BD GestorDB = new BD(this, "Tabla", null, 1);
         db = GestorDB.getWritableDatabase();
 
         RecyclerView laLista = findViewById(R.id.rv);
@@ -99,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
             }else{
                 d = Integer.toString(i);
             }
-            if(GestorDB.hayEntreno(db,año+"-"+mes+"-"+d,nombreUsu)){
+            if(GestorDB.hayEntreno(db,año+"-"+mes+"-"+d,nombreAtleta)){
                 imagenes[i-1] = R.drawable.pesa;
             }else{
                 imagenes[i-1] = R.drawable.descanso;
@@ -122,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent i = getIntent();
                 i.putExtra("mes",Integer.toString(MesNum));
                 i.putExtra("año",Integer.toString(añoNum));
-                i.putExtra("usuario",nombreUsu);
+                i.putExtra("atleta",nombreAtleta);
                 finish();
                 startActivity(i);
             }
@@ -141,7 +145,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent i = getIntent();
                 i.putExtra("mes",Integer.toString(MesNum));
                 i.putExtra("año",Integer.toString(añoNum));
-                i.putExtra("usuario",nombreUsu);
+                i.putExtra("atleta",nombreAtleta);
                 finish();
                 startActivity(i);
 
@@ -155,7 +159,7 @@ public class MainActivity extends AppCompatActivity {
         RecyclerView.LayoutManager elLayoutRejillaIgual= new GridLayoutManager(this,7,GridLayoutManager.VERTICAL,false);
         laLista.setLayoutManager(elLayoutRejillaIgual);
 
-        crearNotificacion();
+        //crearNotificacion();
     }
 
     private final ActivityResultLauncher<Intent> activityLauncher = registerForActivityResult(
@@ -211,10 +215,20 @@ public class MainActivity extends AppCompatActivity {
         return añoMes.lengthOfMonth();
     }
 
+
     public void onBackPressed() {
-        DialogFragment dialogoAlerta = new salirAplicacion();
-        dialogoAlerta.show(getSupportFragmentManager(), "etiqueta");
+        if(nombreEntrenador!=null){ //miramos si es entrenador
+            Intent i = new Intent(MainActivity.this, ListaAtletas.class);
+            i.putExtra("atleta",nombreAtleta);
+            i.putExtra("entrenador",nombreEntrenador);
+            startActivity(i);
+            finish();
+        }else{
+            DialogFragment dialogoAlerta = new salirAplicacion();
+            dialogoAlerta.show(getSupportFragmentManager(), "etiqueta");
+        }
     }
+
 
     public String getMes(){
         return this.mes;
