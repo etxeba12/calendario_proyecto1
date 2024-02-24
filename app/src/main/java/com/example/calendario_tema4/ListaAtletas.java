@@ -24,7 +24,7 @@ import java.util.List;
 public class ListaAtletas extends AppCompatActivity {
     private SQLiteDatabase db;
 
-    private String nombre ="Iker";
+    private String nombre;
     private ArrayAdapter<String> eladaptador;
 
     private List<String> lista;
@@ -32,11 +32,17 @@ public class ListaAtletas extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.listausuarios);
 
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            String pUsuario= extras.getString("usuario");
+           this.nombre = pUsuario;
+        }
+
         BD GestorDB = new BD(this, "Tabla", null, 1);
         db = GestorDB.getWritableDatabase();
 
         lista = GestorDB.obtenerListaUsuarios(db,nombre);
-            eladaptador = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,lista);
+        eladaptador = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,lista);
         ListView lalista = (ListView) findViewById(R.id.listView_atletas);
         lalista.setAdapter(eladaptador);
 
@@ -45,6 +51,7 @@ public class ListaAtletas extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id){
                 Log.i("etiqueta", ((TextView)view).getText().toString()+", "+position+", "+id);
                 Intent i = new Intent(ListaAtletas.this, MainActivity.class);
+                i.putExtra("usuario",nombre);
                 startActivity(i);
                 finish();
             }
@@ -60,6 +67,11 @@ public class ListaAtletas extends AppCompatActivity {
                 lista.clear();
                 if (!pNombre.equals("")) {
                     lista.add(pNombre);
+                }else{ //si el buscado esta vacio o no exite aparecen todos
+                    List<String> usuarios = GestorDB.obtenerListaUsuarios(db,nombre);
+                    for (String usuario:usuarios){
+                        lista.add(usuario);
+                    }
                 }
 
                 eladaptador.notifyDataSetChanged();

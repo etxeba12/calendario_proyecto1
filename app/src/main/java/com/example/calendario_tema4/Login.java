@@ -1,5 +1,6 @@
 package com.example.calendario_tema4;
 
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -21,6 +22,7 @@ public class Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
 
+
         BD GestorDB = new BD(this, "Tabla", null, 1);
         db = GestorDB.getWritableDatabase();
 
@@ -32,7 +34,6 @@ public class Login extends AppCompatActivity {
                 EditText contra = findViewById(R.id.meterContra);
                 String valido = GestorDB.comprobarUsuario(db,usuario.getText().toString());
                 if (valido != null){
-                    Log.d("valido",valido);
                     if (Integer.parseInt(valido)==1){ //comprobamos si es entrenador
                         Intent i = new Intent(Login.this, ListaAtletas.class);
                         i.putExtra("usuario",usuario.getText().toString());

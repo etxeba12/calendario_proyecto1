@@ -19,14 +19,14 @@ public class BD extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE Usuarios ('nombreUsuarios' VARCHAR(255) PRIMARY KEY NOT NULL, 'contrasena' VARCHAR(255) NOT NULL, 'entrenador' VARCHAR(255), 'esEntrenador' INTEGER(1) NOT NULL)");
-
+        db.execSQL("CREATE TABLE calendario('fecha' date NOT NULL, 'nombreEjercicio' varchar(50) DEFAULT NULL,'series' int(11) DEFAULT NULL,'repeticiones' int(11) DEFAULT NULL,'RPE' int(11) DEFAULT NULL, 'kilos' float DEFAULT NULL,'cliente_nombre' varchar(50) DEFAULT NULL,'kilosCliente' varchar(100) DEFAULT NULL,'RPECliente' varchar(100) DEFAULT NULL,FOREIGN KEY ('cliente_nombre') REFERENCES Usuarios ('nombreUsuarios') ON DELETE CASCADE)");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS Usuarios");
+        db.execSQL("DROP TABLE IF EXISTS Calendario");
         onCreate(db);
-
     }
 
     public String comprobarUsuario(SQLiteDatabase db,String usu) {
