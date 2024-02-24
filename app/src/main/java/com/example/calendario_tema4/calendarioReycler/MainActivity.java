@@ -18,13 +18,16 @@ import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.calendario_tema4.BaseDeDatos.BD;
 import com.example.calendario_tema4.R;
 import com.example.calendario_tema4.calendarioReycler.adaptadorRecycler;
 import com.example.calendario_tema4.dialogos.salirAplicacion;
@@ -42,6 +45,9 @@ public class MainActivity extends AppCompatActivity {
     private String año;
     private String fecha;
 
+    private SQLiteDatabase db;
+    private String nombreUsu;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,15 +59,23 @@ public class MainActivity extends AppCompatActivity {
         if (extras != null) {
             String pMes= extras.getString("mes");
             String pAño= extras.getString("año");
-            mes =pMes;
-            año=pAño;
+            String pNombre = extras.getString("usuario");
+            if(pMes != null && pAño != null){
+                if(Integer.parseInt(pMes)<10){
+                    mes = "0"+pMes;
+                }else{
+                    mes =pMes;
+                }
+                año=pAño;
+            }
+            nombreUsu = pNombre;
             fecha = "00/" + mes + "/"+ año;
         }
-        RecyclerView laLista = findViewById(R.id.rv);
-        int[] imagenes= {R.drawable.pesa, R.drawable.pesa, R.drawable.descanso, R.drawable.pesa, R.drawable.descanso,R.drawable.pesa, R.drawable.pesa, R.drawable.descanso, R.drawable.pesa, R.drawable.descanso,R.drawable.descanso,
-                R.drawable.pesa, R.drawable.pesa, R.drawable.descanso, R.drawable.pesa, R.drawable.descanso,R.drawable.pesa, R.drawable.pesa, R.drawable.descanso, R.drawable.pesa, R.drawable.descanso,R.drawable.descanso,
-                R.drawable.pesa, R.drawable.pesa, R.drawable.descanso, R.drawable.pesa, R.drawable.descanso,R.drawable.pesa, R.drawable.pesa, R.drawable.descanso, R.drawable.pesa};
 
+        BD GestorDB = new BD(this, "Tabla", null, 1);
+        db = GestorDB.getWritableDatabase();
+
+        RecyclerView laLista = findViewById(R.id.rv);
         //Conseguir y poner fecha
         if(mes==null || año==null) {
             fecha =consigueFecha();
@@ -74,6 +88,22 @@ public class MainActivity extends AppCompatActivity {
         String[] diaMes = new String[obtenerDiasMes(Integer.parseInt(mes),Integer.parseInt(año))];
         for (int i = 0; i < diaMes.length ; i++) {
             diaMes[i] = String.valueOf(i + 1);
+        }
+        int[] imagenes = new int[diaMes.length];
+        
+        for (int i = 1; i < diaMes.length + 1 ; i++){
+            Log.d("entreno",año+mes+i);
+            String d;
+            if (i <10){
+                d = "0"+i;
+            }else{
+                d = Integer.toString(i);
+            }
+            if(GestorDB.hayEntreno(db,año+"-"+mes+"-"+d,nombreUsu)){
+                imagenes[i-1] = R.drawable.pesa;
+            }else{
+                imagenes[i-1] = R.drawable.descanso;
+            }
         }
         //Conseguir y poner fecha
 
@@ -92,6 +122,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent i = getIntent();
                 i.putExtra("mes",Integer.toString(MesNum));
                 i.putExtra("año",Integer.toString(añoNum));
+                i.putExtra("usuario",nombreUsu);
                 finish();
                 startActivity(i);
             }
@@ -110,6 +141,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent i = getIntent();
                 i.putExtra("mes",Integer.toString(MesNum));
                 i.putExtra("año",Integer.toString(añoNum));
+                i.putExtra("usuario",nombreUsu);
                 finish();
                 startActivity(i);
 

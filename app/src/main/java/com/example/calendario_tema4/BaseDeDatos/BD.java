@@ -55,6 +55,19 @@ public class BD extends SQLiteOpenHelper {
         db.insert("Usuarios", null, values);
     }
 
+    public boolean hayEntreno(SQLiteDatabase db,String pFecha, String pNombre){
+        String query = "SELECT * FROM calendario WHERE fecha = ? AND cliente_nombre = ? ";
+        String[] selectionArgs = {pFecha,pNombre};
+        Cursor cursor = db.rawQuery(query, selectionArgs);
+
+        if (cursor.getCount()!=0) {
+            return true;
+        }
+        cursor.close();
+
+        return false;
+    }
+
     public List<String> obtenerListaUsuarios(SQLiteDatabase db, String nombreEntrenador) {
         List<String> usuarios = new ArrayList<>(); // la lista donde guardar los usuarios
 
