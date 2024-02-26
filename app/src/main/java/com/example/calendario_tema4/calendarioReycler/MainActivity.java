@@ -153,7 +153,7 @@ public class MainActivity extends AppCompatActivity {
         });
         //Botones navegación
 
-        adaptadorRecycler eladaptador = new adaptadorRecycler(diaMes,imagenes,activityLauncher,mes,año);
+        adaptadorRecycler eladaptador = new adaptadorRecycler(diaMes,imagenes,activityLauncher,mes,año,nombreAtleta);
         laLista.setAdapter(eladaptador);
 
         RecyclerView.LayoutManager elLayoutRejillaIgual= new GridLayoutManager(this,7,GridLayoutManager.VERTICAL,false);

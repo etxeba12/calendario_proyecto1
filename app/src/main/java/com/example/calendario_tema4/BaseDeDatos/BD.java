@@ -9,6 +9,7 @@ import android.util.Log;
 
 import androidx.annotation.Nullable;
 
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -98,6 +99,24 @@ public class BD extends SQLiteOpenHelper {
         cursor.close();
 
         return usuario;
+    }
+
+
+    public List<String> conseguirNombreEjer(SQLiteDatabase db,String pFecha,String pNombreUsuario) {
+        List<String> nombreEjercicios = new ArrayList<>(); // la lista donde guardar los usuarios
+
+        String query = "SELECT * FROM calendario WHERE fecha = ? AND cliente_nombre = ?";
+        String[] selectionArgs = {pFecha,pNombreUsuario};
+        Cursor cursor = db.rawQuery(query, selectionArgs);
+
+        if (cursor.moveToFirst()) {
+            do {
+                String nombreEjer = cursor.getString(cursor.getColumnIndexOrThrow("nombreEjercicio"));
+                nombreEjercicios.add(nombreEjer);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return nombreEjercicios;
     }
 
 

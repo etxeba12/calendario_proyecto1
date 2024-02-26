@@ -30,16 +30,18 @@ public class ElViewHolder extends RecyclerView.ViewHolder {
 
     private String mes;
     private String año;
+    private String atleta;
 
     private final ActivityResultLauncher<Intent> activityLauncher;
 
-    public ElViewHolder(@NonNull View itemView, ActivityResultLauncher<Intent> activityLauncher,String pMes,String pAño) {
+    public ElViewHolder(@NonNull View itemView, ActivityResultLauncher<Intent> activityLauncher,String pMes,String pAño,String pAtleta) {
         super(itemView);
         textoDia = itemView.findViewById(R.id.textoDia);
         imagenPesa = itemView.findViewById(R.id.imagenPesa);
         this.activityLauncher = activityLauncher;
         this.mes = pMes;
         this.año = pAño;
+        this.atleta = pAtleta;
 
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,7 +52,8 @@ public class ElViewHolder extends RecyclerView.ViewHolder {
                 Intent intent = new Intent(itemView.getContext(), entrenamiento.class);
                 intent.putExtra("mes", mes);
                 intent.putExtra("año", año);
-                intent.putExtra("diaSeleccionado", Integer.toString(position));
+                intent.putExtra("diaSeleccionado", String.format("%02d", position + 1));
+                intent.putExtra("atleta", atleta);
 
                 // Lanza la actividad con el ActivityResultLauncher
                 activityLauncher.launch(intent);
