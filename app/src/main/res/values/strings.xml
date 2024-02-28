@@ -7,4 +7,7 @@
     <string name="btRegistro"> Registrarse </string>
     <string name="btLogin"> Logearse </string>
     <string name="Logeate"> Logeate </string>
+    <string name="Registrate"> Registrate </string>
+    <string name="repetirContraseña"> Repetir contraseña </string>
+    <string name="entrenador"> Entrenador </string>
 </resources>

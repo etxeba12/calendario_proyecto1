@@ -8,4 +8,7 @@
     <string name="btRegistro">Erregistratu</string>
     <string name="btLogin">Logeatu</string>
     <string name="Logeate">Saioa hasi</string>
+    <string name="Registrate">Erregistratu</string>
+    <string name="repetirContraseña">Pasahitza errepikatu</string>
+    <string name="entrenador">Entrenatzailea</string>
 </resources>

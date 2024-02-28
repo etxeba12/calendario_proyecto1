@@ -16,10 +16,10 @@
         android:layout_marginTop="10dp">
 
         <TextView
-            android:id="@+id/Login"
+            android:id="@+id/Registrate"
             android:layout_width="350dp"
             android:layout_height="50dp"
-            android:text="Registrate"
+            android:text="@string/Registrate"
             android:textSize="30sp"
             style="@style/borde_redondo"
             android:gravity="center"
@@ -28,7 +28,7 @@
 
         <TextView
             android:id="@+id/NombreUsuarioText"
-            android:text="Nombre de usuario"
+            android:text="@string/nombre_usuario"
             android:layout_width="250dp"
             android:layout_height="30dp"
             android:textSize="17sp"
@@ -51,7 +51,7 @@
             android:id="@+id/textoContraseña"
             android:layout_width="250dp"
             android:layout_height="30dp"
-            android:text="Contraseña"
+            android:text="@string/contraseña"
             android:textSize="17sp"
             style="@style/borde_redondo_azul"
             android:layout_marginTop="10dp"
@@ -72,7 +72,7 @@
             android:id="@+id/textoContraseña2"
             android:layout_width="250dp"
             android:layout_height="30dp"
-            android:text="Repetir contraseña"
+            android:text="@string/repetirContraseña"
             android:textSize="17sp"
             style="@style/borde_redondo_azul"
             android:layout_marginTop="10dp"
@@ -93,7 +93,7 @@
             android:id="@+id/esEntrenador"
             android:layout_width="250dp"
             android:layout_height="30dp"
-            android:text="Entrenador "
+            android:text="@string/entrenador"
             android:gravity="center"
             style="@style/borde_redondo_azul"
             android:layout_marginTop="10dp"/>
@@ -109,7 +109,7 @@
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Logearse"
+                android:text="@string/btLogin"
                 android:textSize="17sp"
                 style="@style/borde_redondo_azul"
                 android:layout_marginLeft="20dp"
@@ -120,7 +120,7 @@
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Registrarse"
+                android:text="@string/btRegistro"
                 android:textSize="17sp"
                 style="@style/borde_redondo_azul"
                 android:layout_marginLeft="20dp"

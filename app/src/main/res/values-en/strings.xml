@@ -8,4 +8,7 @@
     <string name="btRegistro">Register</string>
     <string name="btLogin">Login</string>
     <string name="Logeate">Log in</string>
+    <string name="Registrate">Sign up</string>
+    <string name="repetirContraseña">Repeat password</string>
+    <string name="entrenador">Coach</string>
 </resources>
