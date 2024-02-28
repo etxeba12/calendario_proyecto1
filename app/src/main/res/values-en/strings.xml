@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">TRAINING CALENDAR</string>
+    <string name="bt_siguiente">Next</string>
+    <string name="bt_anterior">Previous</string>
+    <string name="nombre_usuario">Username</string>
+    <string name="contraseña">Password</string>
+    <string name="btRegistro">Register</string>
+    <string name="btLogin">Login</string>
+    <string name="Logeate">Log in</string>
+</resources>

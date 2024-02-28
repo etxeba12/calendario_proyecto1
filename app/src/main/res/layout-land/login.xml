@@ -16,7 +16,7 @@
             android:id="@+id/Login"
             android:layout_width="350dp"
             android:layout_height="35dp"
-            android:text="Logeate"
+            android:text="@string/Logeate"
             android:textSize="25sp"
             style="@style/borde_redondo"
             android:gravity="center"
@@ -25,7 +25,7 @@
 
         <TextView
             android:id="@+id/NombreUsuarioText"
-            android:text="Nombre de usuario"
+            android:text="@string/nombre_usuario"
             android:layout_width="250dp"
             android:layout_height="25dp"
             android:textSize="15sp"
@@ -45,11 +45,11 @@
             android:layout_marginBottom="10dp"/>
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/contraseñaText"
             android:layout_width="250dp"
             android:layout_height="25dp"
             android:textSize="15sp"
-            android:text="Contraseña"
+            android:text="@string/contraseña"
             style="@style/borde_redondo_azul"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
@@ -76,7 +76,7 @@
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Registrarse"
+                android:text="@string/btRegistro"
                 android:textSize="17sp"
                 style="@style/borde_redondo_azul"
                 android:layout_marginLeft="80dp"
@@ -87,7 +87,7 @@
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Logearse"
+                android:text="@string/btLogin"
                 android:textSize="17sp"
                 style="@style/borde_redondo_azul"
                 android:layout_marginLeft="80dp"

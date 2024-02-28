@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ENTRENAMENDU EGUTEGIA</string>
+    <string name="bt_siguiente">Hurrengoa</string>
+    <string name="bt_anterior">Aurrekoa</string>
+    <string name="nombre_usuario">Erabiltzaile izena</string>
+    <string name="contraseña">Pasahitza</string>
+    <string name="btRegistro">Erregistratu</string>
+    <string name="btLogin">Logeatu</string>
+    <string name="Logeate">Saioa hasi</string>
+</resources>
