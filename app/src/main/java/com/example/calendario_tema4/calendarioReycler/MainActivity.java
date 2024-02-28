@@ -23,6 +23,7 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -76,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
             nombreEntrenador = pEntrenador;
             fecha = "00/" + mes + "/"+ año;
         }
-
+        setSupportActionBar(findViewById(R.id.labarra));
         db = GestorDB.getWritableDatabase();
 
         RecyclerView laLista = findViewById(R.id.rv);
@@ -227,6 +228,12 @@ public class MainActivity extends AppCompatActivity {
             DialogFragment dialogoAlerta = new salirAplicacion();
             dialogoAlerta.show(getSupportFragmentManager(), "etiqueta");
         }
+    }
+
+    //Definir el fichero xml al toolbar
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu,menu);
+        return true;
     }
 
 

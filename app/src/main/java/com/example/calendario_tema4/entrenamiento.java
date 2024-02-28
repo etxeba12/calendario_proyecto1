@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -45,6 +46,8 @@ public class entrenamiento extends AppCompatActivity {
             Log.d("lista",nombreAtleta);
         }
 
+        setSupportActionBar(findViewById(R.id.labarra));
+
         BD GestorDB = new BD(this, "Tabla", null, 1);
         db = GestorDB.getWritableDatabase();
 
@@ -63,7 +66,12 @@ public class entrenamiento extends AppCompatActivity {
 
             }
         });
-
-
     }
+
+    //Definir el fichero xml al toolbar
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu,menu);
+        return true;
+    }
+
 }

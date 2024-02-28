@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -37,6 +38,8 @@ public class ListaAtletas extends AppCompatActivity {
             String pUsuario= extras.getString("entrenador");
            this.entrenador = pUsuario;
         }
+
+        setSupportActionBar(findViewById(R.id.labarra));
 
         BD GestorDB = new BD(this, "Tabla", null, 1);
         db = GestorDB.getWritableDatabase();
@@ -77,9 +80,11 @@ public class ListaAtletas extends AppCompatActivity {
                 eladaptador.notifyDataSetChanged();
             }
         });
+    }
 
-
-
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu,menu);
+        return true;
     }
 
 }
