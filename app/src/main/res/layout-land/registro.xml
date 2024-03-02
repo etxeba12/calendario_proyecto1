@@ -4,13 +4,24 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/labarra"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="#1abade"
+        android:elevation="4dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
         android:orientation="vertical"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/labarra"
+        android:layout_marginTop="50dp">
 
         <TextView
             android:id="@+id/Registrate"
@@ -132,7 +143,7 @@
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Logearse"
+                android:text="@string/btLogin"
                 android:textSize="17sp"
                 style="@style/borde_redondo_azul"
                 android:layout_marginLeft="80dp"
@@ -143,7 +154,7 @@
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Registrarse"
+                android:text="@string/btRegistro"
                 android:textSize="17sp"
                 style="@style/borde_redondo_azul"
                 android:layout_marginLeft="80dp"

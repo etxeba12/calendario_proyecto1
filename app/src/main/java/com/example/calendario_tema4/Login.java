@@ -2,29 +2,46 @@ package com.example.calendario_tema4;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.calendario_tema4.BaseDeDatos.BD;
 import com.example.calendario_tema4.calendarioReycler.MainActivity;
 
+import java.util.Locale;
+
 public class Login extends AppCompatActivity {
 
     private SQLiteDatabase db;
+    private String idioma;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            idioma = extras.getString("idioma");
+        }
+        if(idioma != null){
+            cambiarIdioma(idioma);
+        }
         setContentView(R.layout.login);
 
 
         BD GestorDB = new BD(this, "Tabla", null, 1);
         db = GestorDB.getWritableDatabase();
+
+        setSupportActionBar(findViewById(R.id.labarra));
         /*
         db.execSQL("INSERT INTO calendario (fecha, nombreEjercicio, series, repeticiones, RPE, kilos, cliente_nombre, kilosCliente, RPECliente) VALUES " +
                 "('2023-11-19', 'Comp SQ', 4, 4, 5, 180, 'manuel', ' 0 0 0 0', ' 0 0 0 0'), " +
@@ -114,15 +131,64 @@ public class Login extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(Login.this, Registro.class);
+                getIntent().putExtra("idioma",idioma);
                 startActivity(i);
                 finish();
             }
         });
     }
 
-
     public void onDestroy() {
         super.onDestroy();
         db.close();
     }
+
+    //Definir el fichero xml al toolbar
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+
+        if(id == R.id.castellano){
+            idioma = "es";
+            getIntent().putExtra("idioma",idioma);
+            finish();
+            startActivity(getIntent());
+            return true;
+        }
+
+        else if(id == R.id.euskera){
+            idioma = "eu";
+            getIntent().putExtra("idioma",idioma);
+            finish();
+            startActivity(getIntent());
+            return true;
+        }
+        else if(id == R.id.ingles){
+            idioma = "en";
+            getIntent().putExtra("idioma",idioma);
+            finish();
+            startActivity(getIntent());
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+
+    }
+
+    protected void cambiarIdioma(String idioma){
+        Locale nuevaloc = new Locale(idioma);
+        Locale.setDefault(nuevaloc);
+
+        Configuration configuration = getBaseContext().getResources().getConfiguration();
+        configuration.setLocale(nuevaloc);
+        configuration.setLayoutDirection(nuevaloc);
+
+        Context context = getBaseContext().createConfigurationContext(configuration);
+        getBaseContext().getResources().updateConfiguration(configuration, context.getResources().getDisplayMetrics());
+    }
+
 }

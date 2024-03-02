@@ -130,6 +130,12 @@ public class BD extends SQLiteOpenHelper {
         return nombreEjercicios;
     }
 
+    public Cursor conseguirEntrenoMes(SQLiteDatabase db,String pMes, String pNombreAtleta){
+        String query = "SELECT * FROM calendario WHERE strftime('%m', fecha) = ? AND cliente_nombre = ?";
+        String[] selectionArgs = {pMes,pNombreAtleta};
+        return db.rawQuery(query,selectionArgs);
+    }
+
 
 
 

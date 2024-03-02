@@ -10,5 +10,5 @@
     <string name="Registrate"> Registrate </string>
     <string name="repetirContraseña"> Repetir contraseña </string>
     <string name="entrenador"> Entrenador </string>
-    <string name="btvolver"> Volver </string>
+    <string name="btGuardar"> Guardar </string>
 </resources>

@@ -1,28 +1,47 @@
 package com.example.calendario_tema4;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.calendario_tema4.BaseDeDatos.BD;
 import com.example.calendario_tema4.dialogos.dialogoAlerta;
 
+import java.util.Locale;
+
 public class Registro extends AppCompatActivity {
     private SQLiteDatabase db; //base de datos de la tabla usuarios
+    private String idioma;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            idioma = extras.getString("idioma");
+        }
+        if(idioma != null){
+            cambiarIdioma(idioma);
+        }
+
         setContentView(R.layout.registro);
 
         BD GestorDB = new BD(this, "Tabla", null, 1);
         db = GestorDB.getWritableDatabase();
+
+        setSupportActionBar(findViewById(R.id.labarra));
 
         Button registrobt = findViewById(R.id.Registro);
 
@@ -95,10 +114,56 @@ public class Registro extends AppCompatActivity {
         });
 
     }
-
     public void onDestroy() {
         super.onDestroy();
+    }
 
+    //Definir el fichero xml al toolbar
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+
+        if(id == R.id.castellano){
+            idioma = "es";
+            getIntent().putExtra("idioma",idioma);
+            finish();
+            startActivity(getIntent());
+            return true;
+        }
+
+        else if(id == R.id.euskera){
+            idioma = "eu";
+            getIntent().putExtra("idioma",idioma);
+            finish();
+            startActivity(getIntent());
+            return true;
+        }
+        else if(id == R.id.ingles){
+            idioma = "en";
+            getIntent().putExtra("idioma",idioma);
+            finish();
+            startActivity(getIntent());
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+
+    }
+
+    protected void cambiarIdioma(String idioma){
+        Locale nuevaloc = new Locale(idioma);
+        Locale.setDefault(nuevaloc);
+
+        Configuration configuration = getBaseContext().getResources().getConfiguration();
+        configuration.setLocale(nuevaloc);
+        configuration.setLayoutDirection(nuevaloc);
+
+        Context context = getBaseContext().createConfigurationContext(configuration);
+        getBaseContext().getResources().updateConfiguration(configuration, context.getResources().getDisplayMetrics());
     }
 
 }

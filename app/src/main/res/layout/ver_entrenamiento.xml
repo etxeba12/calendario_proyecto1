@@ -32,11 +32,11 @@
             />
 
         <Button
-            android:id="@+id/btVuelta"
+            android:id="@+id/btGuardar"
             android:layout_width="100dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="@string/btvolver"
+            android:text="@string/btGuardar"
             style="@style/borde_redondo_azul"/>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
