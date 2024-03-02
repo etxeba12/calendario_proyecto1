@@ -4,6 +4,7 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
@@ -11,6 +12,7 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import android.view.MenuItem;
 
 import android.app.Activity;
 import android.app.NotificationChannel;
@@ -18,12 +20,14 @@ import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -47,6 +51,8 @@ public class MainActivity extends AppCompatActivity {
     private String año;
     private String fecha;
 
+    private String idioma;
+
     private SQLiteDatabase db;
     private String nombreAtleta;
     private String nombreEntrenador;
@@ -55,12 +61,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        solicitarPermisosNotificaciones(); //Pedimos permisos, si todavia no tiene
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
+            idioma = extras.getString("idioma");
             String pMes= extras.getString("mes");
             String pAño= extras.getString("año");
             String pNombre = extras.getString("atleta");
@@ -77,6 +81,12 @@ public class MainActivity extends AppCompatActivity {
             nombreEntrenador = pEntrenador;
             fecha = "00/" + mes + "/"+ año;
         }
+        if(idioma != null){
+            cambiarIdioma(idioma);
+        }
+        setContentView(R.layout.activity_main);
+        solicitarPermisosNotificaciones(); //Pedimos permisos, si todavia no tiene
+
         setSupportActionBar(findViewById(R.id.labarra));
         db = GestorDB.getWritableDatabase();
 
@@ -125,6 +135,7 @@ public class MainActivity extends AppCompatActivity {
 
                 }
                 Intent i = getIntent();
+                i.putExtra("idioma",idioma);
                 i.putExtra("mes",Integer.toString(MesNum));
                 i.putExtra("año",Integer.toString(añoNum));
                 i.putExtra("atleta",nombreAtleta);
@@ -144,6 +155,7 @@ public class MainActivity extends AppCompatActivity {
 
                 }
                 Intent i = getIntent();
+                i.putExtra("idioma",idioma);
                 i.putExtra("mes",Integer.toString(MesNum));
                 i.putExtra("año",Integer.toString(añoNum));
                 i.putExtra("atleta",nombreAtleta);
@@ -154,7 +166,7 @@ public class MainActivity extends AppCompatActivity {
         });
         //Botones navegación
 
-        adaptadorRecycler eladaptador = new adaptadorRecycler(diaMes,imagenes,activityLauncher,mes,año,nombreAtleta);
+        adaptadorRecycler eladaptador = new adaptadorRecycler(diaMes,imagenes,activityLauncher,mes,año,nombreAtleta,idioma);
         laLista.setAdapter(eladaptador);
 
         RecyclerView.LayoutManager elLayoutRejillaIgual= new GridLayoutManager(this,7,GridLayoutManager.VERTICAL,false);
@@ -222,6 +234,7 @@ public class MainActivity extends AppCompatActivity {
             Intent i = new Intent(MainActivity.this, ListaAtletas.class);
             i.putExtra("atleta",nombreAtleta);
             i.putExtra("entrenador",nombreEntrenador);
+            i.putExtra("idioma",idioma);
             startActivity(i);
             finish();
         }else{
@@ -235,6 +248,62 @@ public class MainActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu,menu);
         return true;
     }
+
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+
+        if(id == R.id.castellano){
+            idioma = "es";
+            getIntent().putExtra("idioma",idioma);
+            getIntent().putExtra("mes",mes);
+            getIntent().putExtra("año",año);
+            getIntent().putExtra("atleta",nombreAtleta);
+            getIntent().putExtra("entrenador",nombreEntrenador);
+            finish();
+            startActivity(getIntent());
+            return true;
+        }
+
+        else if(id == R.id.euskera){
+            idioma = "eu";
+            getIntent().putExtra("idioma",idioma);
+            getIntent().putExtra("mes",mes);
+            getIntent().putExtra("año",año);
+            getIntent().putExtra("atleta",nombreAtleta);
+            getIntent().putExtra("entrenador",nombreEntrenador);
+            finish();
+            startActivity(getIntent());
+            return true;
+        }
+        else if(id == R.id.ingles){
+            idioma = "en";
+            getIntent().putExtra("idioma",idioma);
+            getIntent().putExtra("mes",mes);
+            getIntent().putExtra("año",año);
+            getIntent().putExtra("atleta",nombreAtleta);
+            getIntent().putExtra("entrenador",nombreEntrenador);
+            finish();
+            startActivity(getIntent());
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+
+    }
+
+    protected void cambiarIdioma(String idioma){
+        Locale nuevaloc = new Locale(idioma);
+        Locale.setDefault(nuevaloc);
+
+        Configuration configuration = getBaseContext().getResources().getConfiguration();
+        configuration.setLocale(nuevaloc);
+        configuration.setLayoutDirection(nuevaloc);
+
+        Context context = getBaseContext().createConfigurationContext(configuration);
+        getBaseContext().getResources().updateConfiguration(configuration, context.getResources().getDisplayMetrics());
+    }
+
 
 
     public String getMes(){

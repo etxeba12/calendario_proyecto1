@@ -30,6 +30,17 @@ public class BD extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+    public boolean comprobarExisteUsuario(SQLiteDatabase db,String usu) {
+        String query = "SELECT * FROM Usuarios WHERE nombreUsuarios = ?";
+        String[] selectionArgs = {usu};
+        boolean existe = false;
+        Cursor c = db.rawQuery(query, selectionArgs);
+        if (c.getCount() != 0) {
+                existe = true;
+        }
+        c.close(); // Cerramos el cursor después de usarlo
+        return existe;
+    }
     public String comprobarUsuario(SQLiteDatabase db,String usu) {
         String query = "SELECT * FROM Usuarios WHERE nombreUsuarios = ?";
         String[] selectionArgs = {usu};

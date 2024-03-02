@@ -1,24 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    >
+
         <item
-            android:id="@+id/opcion1"
-            android:icon="@android:drawable/ic_menu_more"
-            app:showAsAction="always"
-            android:title="MÁS">
-                <menu>
-                        <item
-                            android:id="@+id/castellano"
-                            android:title="Castellano"/>
-                        <item
-                            android:id="@+id/euskera"
-                            android:title="Euskera" />
-                        <item
-                            android:id="@+id/ingles"
-                            android:title="Ingles" />
-                </menu>
-
-
-        </item>
+            android:id="@+id/castellano"
+            android:icon="@drawable/ic_launcher_background"
+            android:title="Castellano"
+            app:showAsAction="never" />
+        <item
+            android:id="@+id/euskera"
+            android:title="Euskera"
+            app:showAsAction="never"
+            android:icon="@drawable/ic_launcher_background"/>
+        <item
+            android:id="@+id/ingles"
+            android:title="Ingles"
+            app:showAsAction="never"
+            android:icon="@drawable/ic_launcher_background"/>
 
 </menu>

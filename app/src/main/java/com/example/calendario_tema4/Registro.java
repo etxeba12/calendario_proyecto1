@@ -37,7 +37,7 @@ public class Registro extends AppCompatActivity {
                     if(!contra1.getText().toString().equals("") && !contra2.getText().toString().equals("")){
                         if(contra1.getText().toString().equals(contra2.getText().toString())){
                             if(entrenador.isChecked()){
-                                if(GestorDB.comprobarUsuario(db,nombreUsu.getText().toString())!= null) {
+                                if(!GestorDB.comprobarExisteUsuario(db, nombreUsu.getText().toString())) {
                                     GestorDB.meterUsuario(db,nombreUsu.getText().toString(),contra1.getText().toString(),"",1);
                                     Intent i = new Intent(Registro.this, Login.class);
                                     startActivity(i);
@@ -48,7 +48,7 @@ public class Registro extends AppCompatActivity {
                                     dialogo.show(getSupportFragmentManager(), "etiqueta0");
                                 }
                             }else{
-                                if(GestorDB.comprobarUsuario(db,nombreUsu.getText().toString())!= null) {
+                                if(!GestorDB.comprobarExisteUsuario(db,nombreUsu.getText().toString())) {
                                     GestorDB.meterUsuario(db,nombreUsu.getText().toString(),contra1.getText().toString(),"",0);
                                     Intent i = new Intent(Registro.this, Login.class);
                                     startActivity(i);
