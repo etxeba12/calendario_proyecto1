@@ -1,11 +1,14 @@
 package com.example.calendario_tema4.calendarioReycler;
 
+
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
@@ -30,7 +33,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.calendario_tema4.BaseDeDatos.BD;
 import com.example.calendario_tema4.ListaAtletas;
@@ -86,7 +92,6 @@ public class MainActivity extends AppCompatActivity {
         }
         setContentView(R.layout.activity_main);
         solicitarPermisosNotificaciones(); //Pedimos permisos, si todavia no tiene
-
         setSupportActionBar(findViewById(R.id.labarra));
         db = GestorDB.getWritableDatabase();
 
@@ -245,7 +250,7 @@ public class MainActivity extends AppCompatActivity {
 
     //Definir el fichero xml al toolbar
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu,menu);
+        getMenuInflater().inflate(R.menu.menu, menu);
         return true;
     }
 
@@ -253,8 +258,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
-
+        Log.d("MainActivity", "onOptionsItemSelected: " + item.getItemId());
         if(id == R.id.castellano){
+            Log.d("entro","he entrado");
             idioma = "es";
             getIntent().putExtra("idioma",idioma);
             getIntent().putExtra("mes",mes);
@@ -286,6 +292,20 @@ public class MainActivity extends AppCompatActivity {
             getIntent().putExtra("entrenador",nombreEntrenador);
             finish();
             startActivity(getIntent());
+            return true;
+        }
+        else if(id == R.id.cambioTema){
+            int currentNightMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+            if (currentNightMode == Configuration.UI_MODE_NIGHT_NO) {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                Toast.makeText(this, "Tema oscuro activado", Toast.LENGTH_SHORT).show();
+            } else {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                Toast.makeText(this, "Tema claro activado", Toast.LENGTH_SHORT).show();
+            }
+
+            // Recrear la actividad para aplicar el nuevo tema
+            recreate();
             return true;
         }
         return super.onOptionsItemSelected(item);

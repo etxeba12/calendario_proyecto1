@@ -5,11 +5,12 @@
         <item name="android:background">@drawable/borde_redondo</item>
     </style>
 
-    <style name="mainActivity" parent="Theme.AppCompat">
+    <style name="mainActivity" parent="Theme.AppCompat.DayNight.DarkActionBar">
         <item name="colorPrimary">#1abade</item>
         <item name="colorPrimaryDark">#f4f4f4</item>
         <item name="android:fontFamily">sans-serif-condensed-light</item>
     </style>
+
 
     <style name="borde_redondo">
         <item name="android:background">@drawable/borde_redondo</item>

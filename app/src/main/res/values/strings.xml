@@ -11,4 +11,6 @@
     <string name="repetirContraseña"> Repetir contraseña </string>
     <string name="entrenador"> Entrenador </string>
     <string name="btGuardar"> Guardar </string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
