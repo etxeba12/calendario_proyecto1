@@ -25,12 +25,17 @@ public class Login extends AppCompatActivity {
 
     private SQLiteDatabase db;
     private String idioma;
+
+    private int tema = R.style.Calendario_tema1;
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             idioma = extras.getString("idioma");
+            tema = extras.getInt("tema");
+            setTheme(tema);
         }
         if(idioma != null){
             cambiarIdioma(idioma);
@@ -111,11 +116,15 @@ public class Login extends AppCompatActivity {
                     if (Integer.parseInt(valido)==1){ //comprobamos si es entrenador
                         Intent i = new Intent(Login.this, ListaAtletas.class);
                         i.putExtra("entrenador",usuario.getText().toString());
+                        i.putExtra("tema",tema);
+                        i.putExtra("idioma",idioma);
                         startActivity(i);
                         finish();
                     }else{
                         Intent i = new Intent(Login.this, MainActivity.class);
                         i.putExtra("atleta",usuario.getText().toString());
+                        i.putExtra("tema",tema);
+                        i.putExtra("idioma",idioma);
                         startActivity(i);
                         finish();
                     }
@@ -131,7 +140,8 @@ public class Login extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(Login.this, Registro.class);
-                getIntent().putExtra("idioma",idioma);
+                i.putExtra("idioma",idioma);
+                i.putExtra("tema",tema);
                 startActivity(i);
                 finish();
             }
@@ -148,6 +158,20 @@ public class Login extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu,menu);
         return true;
     }
+    public void onChangeThemeClick(MenuItem item) {
+        int currentTheme = tema; // tema actual
+
+        if (currentTheme == R.style.Calendario_tema1) {
+            currentTheme = R.style.Calendario_tema2;
+
+        } else {
+            currentTheme = R.style.Calendario_tema1;
+        }
+        getIntent().putExtra("idioma",idioma);
+        getIntent().putExtra("tema",currentTheme);
+        finish();
+        startActivity(getIntent());
+    }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -156,6 +180,7 @@ public class Login extends AppCompatActivity {
         if(id == R.id.castellano){
             idioma = "es";
             getIntent().putExtra("idioma",idioma);
+            getIntent().putExtra("tema",tema);
             finish();
             startActivity(getIntent());
             return true;
@@ -164,6 +189,7 @@ public class Login extends AppCompatActivity {
         else if(id == R.id.euskera){
             idioma = "eu";
             getIntent().putExtra("idioma",idioma);
+            getIntent().putExtra("tema",tema);
             finish();
             startActivity(getIntent());
             return true;
@@ -171,6 +197,7 @@ public class Login extends AppCompatActivity {
         else if(id == R.id.ingles){
             idioma = "en";
             getIntent().putExtra("idioma",idioma);
+            getIntent().putExtra("tema",tema);
             finish();
             startActivity(getIntent());
             return true;

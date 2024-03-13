@@ -5,10 +5,16 @@
         <item name="android:background">@drawable/borde_redondo</item>
     </style>
 
-    <style name="mainActivity" parent="Theme.AppCompat.DayNight.DarkActionBar">
+    <style name="Calendario_tema1" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowBackground">#f4f4f4</item>
         <item name="colorPrimary">#1abade</item>
-        <item name="colorPrimaryDark">#f4f4f4</item>
         <item name="android:fontFamily">sans-serif-condensed-light</item>
+    </style>
+
+    <!-- Theme 2 -->
+    <style name="Calendario_tema2" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowBackground">@color/black</item>
+        <!-- Otros atributos personalizados para el tema 2 -->
     </style>
 
 

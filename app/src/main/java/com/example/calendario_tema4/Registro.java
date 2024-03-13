@@ -25,12 +25,16 @@ public class Registro extends AppCompatActivity {
     private SQLiteDatabase db; //base de datos de la tabla usuarios
     private String idioma;
 
+    private int tema;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             idioma = extras.getString("idioma");
+            tema = extras.getInt("tema");
+            setTheme(tema);
         }
         if(idioma != null){
             cambiarIdioma(idioma);
@@ -59,6 +63,8 @@ public class Registro extends AppCompatActivity {
                                 if(!GestorDB.comprobarExisteUsuario(db, nombreUsu.getText().toString())) {
                                     GestorDB.meterUsuario(db,nombreUsu.getText().toString(),contra1.getText().toString(),"",1);
                                     Intent i = new Intent(Registro.this, Login.class);
+                                    i.putExtra("tema",tema);
+                                    i.putExtra("idioma",idioma);
                                     startActivity(i);
                                     finish();
                                 }else{
@@ -70,6 +76,8 @@ public class Registro extends AppCompatActivity {
                                 if(!GestorDB.comprobarExisteUsuario(db,nombreUsu.getText().toString())) {
                                     GestorDB.meterUsuario(db,nombreUsu.getText().toString(),contra1.getText().toString(),"",0);
                                     Intent i = new Intent(Registro.this, Login.class);
+                                    i.putExtra("tema",tema);
+                                    i.putExtra("idioma",idioma);
                                     startActivity(i);
                                     finish();
                                 }else{
@@ -108,6 +116,8 @@ public class Registro extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(Registro.this,Login.class);
+                i.putExtra("tema",tema);
+                i.putExtra("idioma",idioma);
                 startActivity(i);
                 finish();
             }
@@ -116,6 +126,21 @@ public class Registro extends AppCompatActivity {
     }
     public void onDestroy() {
         super.onDestroy();
+    }
+
+    public void onChangeThemeClick(MenuItem item) {
+        int currentTheme = tema; // tema actual
+
+        if (currentTheme == R.style.Calendario_tema1) {
+            currentTheme = R.style.Calendario_tema2;
+
+        } else {
+            currentTheme = R.style.Calendario_tema1;
+        }
+        getIntent().putExtra("idioma",idioma);
+        getIntent().putExtra("tema",currentTheme);
+        finish();
+        startActivity(getIntent());
     }
 
     //Definir el fichero xml al toolbar
@@ -131,6 +156,7 @@ public class Registro extends AppCompatActivity {
         if(id == R.id.castellano){
             idioma = "es";
             getIntent().putExtra("idioma",idioma);
+            getIntent().putExtra("tema",tema);
             finish();
             startActivity(getIntent());
             return true;
@@ -139,6 +165,7 @@ public class Registro extends AppCompatActivity {
         else if(id == R.id.euskera){
             idioma = "eu";
             getIntent().putExtra("idioma",idioma);
+            getIntent().putExtra("tema",tema);
             finish();
             startActivity(getIntent());
             return true;
@@ -146,6 +173,7 @@ public class Registro extends AppCompatActivity {
         else if(id == R.id.ingles){
             idioma = "en";
             getIntent().putExtra("idioma",idioma);
+            getIntent().putExtra("tema",tema);
             finish();
             startActivity(getIntent());
             return true;

@@ -29,7 +29,7 @@
             android:layout_width="30dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="Lista de atletas:"
+            android:text="@string/listaUsuarios"
             android:gravity="center_vertical"
             android:textSize="20sp"
             android:layout_marginRight="20dp"/>
@@ -48,7 +48,7 @@
             android:layout_width="10dp"
             android:layout_height="20dp"
             android:layout_weight="1"
-            android:text="Buscar"
+            android:text="@string/btBuscar"
             android:layout_marginRight="10dp"
             style="@style/borde_redondo_azul"/>
     </LinearLayout>

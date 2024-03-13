@@ -12,4 +12,6 @@
     <string name="repetirContraseña">Pasahitza errepikatu</string>
     <string name="entrenador">Entrenatzailea</string>
     <string name="btGuardar">Gorde</string>
+    <string name="listaUsuarios">Atleta zerrenda:</string>
+    <string name="btBuscar">Bilatu</string>
 </resources>

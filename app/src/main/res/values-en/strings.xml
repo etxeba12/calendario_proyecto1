@@ -12,4 +12,6 @@
     <string name="repetirContraseña">Repeat password</string>
     <string name="entrenador">Coach</string>
     <string name="btGuardar">Save</string>
+    <string name="listaUsuarios">athletes list:</string>
+    <string name="btBuscar">Search</string>
 </resources>

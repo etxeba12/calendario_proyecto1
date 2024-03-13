@@ -6,7 +6,8 @@
             android:id="@+id/cambioTema"
             android:icon="@drawable/cambiar_tema"
             android:title="Cambiar tema"
-            app:showAsAction="always" />
+            app:showAsAction="always"
+            android:onClick="onChangeThemeClick"/>
 
         <item
             android:id="@+id/castellano"

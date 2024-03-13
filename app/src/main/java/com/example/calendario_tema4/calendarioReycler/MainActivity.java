@@ -59,6 +59,8 @@ public class MainActivity extends AppCompatActivity {
 
     private String idioma;
 
+    private int tema;
+
     private SQLiteDatabase db;
     private String nombreAtleta;
     private String nombreEntrenador;
@@ -75,6 +77,8 @@ public class MainActivity extends AppCompatActivity {
             String pAño= extras.getString("año");
             String pNombre = extras.getString("atleta");
             String pEntrenador = extras.getString("entrenador");
+            tema = extras.getInt("tema");
+            setTheme(tema);
             if(pMes != null && pAño != null){
                 if(Integer.parseInt(pMes)<10){
                     mes = "0"+pMes;
@@ -144,6 +148,7 @@ public class MainActivity extends AppCompatActivity {
                 i.putExtra("mes",Integer.toString(MesNum));
                 i.putExtra("año",Integer.toString(añoNum));
                 i.putExtra("atleta",nombreAtleta);
+                i.putExtra("tema",tema);
                 finish();
                 startActivity(i);
             }
@@ -164,6 +169,7 @@ public class MainActivity extends AppCompatActivity {
                 i.putExtra("mes",Integer.toString(MesNum));
                 i.putExtra("año",Integer.toString(añoNum));
                 i.putExtra("atleta",nombreAtleta);
+                i.putExtra("tema",tema);
                 finish();
                 startActivity(i);
 
@@ -171,7 +177,7 @@ public class MainActivity extends AppCompatActivity {
         });
         //Botones navegación
 
-        adaptadorRecycler eladaptador = new adaptadorRecycler(diaMes,imagenes,activityLauncher,mes,año,nombreAtleta,idioma);
+        adaptadorRecycler eladaptador = new adaptadorRecycler(diaMes,imagenes,activityLauncher,mes,año,nombreAtleta,idioma,tema);
         laLista.setAdapter(eladaptador);
 
         RecyclerView.LayoutManager elLayoutRejillaIgual= new GridLayoutManager(this,7,GridLayoutManager.VERTICAL,false);
@@ -240,6 +246,7 @@ public class MainActivity extends AppCompatActivity {
             i.putExtra("atleta",nombreAtleta);
             i.putExtra("entrenador",nombreEntrenador);
             i.putExtra("idioma",idioma);
+            i.putExtra("tema",tema);
             startActivity(i);
             finish();
         }else{
@@ -267,6 +274,7 @@ public class MainActivity extends AppCompatActivity {
             getIntent().putExtra("año",año);
             getIntent().putExtra("atleta",nombreAtleta);
             getIntent().putExtra("entrenador",nombreEntrenador);
+            getIntent().putExtra("tema",tema);
             finish();
             startActivity(getIntent());
             return true;
@@ -279,6 +287,7 @@ public class MainActivity extends AppCompatActivity {
             getIntent().putExtra("año",año);
             getIntent().putExtra("atleta",nombreAtleta);
             getIntent().putExtra("entrenador",nombreEntrenador);
+            getIntent().putExtra("tema",tema);
             finish();
             startActivity(getIntent());
             return true;
@@ -290,26 +299,28 @@ public class MainActivity extends AppCompatActivity {
             getIntent().putExtra("año",año);
             getIntent().putExtra("atleta",nombreAtleta);
             getIntent().putExtra("entrenador",nombreEntrenador);
+            getIntent().putExtra("tema",tema);
             finish();
             startActivity(getIntent());
             return true;
         }
-        else if(id == R.id.cambioTema){
-            int currentNightMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
-            if (currentNightMode == Configuration.UI_MODE_NIGHT_NO) {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                Toast.makeText(this, "Tema oscuro activado", Toast.LENGTH_SHORT).show();
-            } else {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                Toast.makeText(this, "Tema claro activado", Toast.LENGTH_SHORT).show();
-            }
-
-            // Recrear la actividad para aplicar el nuevo tema
-            recreate();
-            return true;
-        }
         return super.onOptionsItemSelected(item);
 
+    }
+
+    public void onChangeThemeClick(MenuItem item) {
+        int currentTheme = tema; // tema actual
+
+        if (currentTheme == R.style.Calendario_tema1) {
+            currentTheme = R.style.Calendario_tema2;
+
+        } else {
+            currentTheme = R.style.Calendario_tema1;
+        }
+        getIntent().putExtra("idioma",idioma);
+        getIntent().putExtra("tema",currentTheme);
+        finish();
+        startActivity(getIntent());
     }
 
     protected void cambiarIdioma(String idioma){

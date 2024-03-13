@@ -44,6 +44,7 @@ public class entrenamiento extends AppCompatActivity {
     private String mes;
     private List<String> lista;
     private ArrayAdapter<String> eladaptador;
+    private int tema;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +56,8 @@ public class entrenamiento extends AppCompatActivity {
             String pAño= extras.getString("año");
             String pDia= extras.getString("diaSeleccionado");
             String pAtleta= extras.getString("atleta");
+            tema = extras.getInt("tema");
+            setTheme(tema);
             mes = pMes;
             fecha = pAño+"-"+pMes+"-"+pDia;
             nombreAtleta = pAtleta;
