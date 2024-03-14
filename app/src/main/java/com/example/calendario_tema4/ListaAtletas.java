@@ -1,9 +1,13 @@
 package com.example.calendario_tema4;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -13,16 +17,19 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.calendario_tema4.BaseDeDatos.BD;
 import com.example.calendario_tema4.calendarioReycler.MainActivity;
+import com.example.calendario_tema4.dialogos.dialogoAlerta;
 
 import java.util.List;
 import java.util.Locale;
@@ -82,7 +89,7 @@ public class ListaAtletas extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 EditText et = findViewById(R.id.NombreAtleta);
-                String pNombre = GestorDB.obtenerUsuarioEntrenador(db,et.getText().toString());
+                String pNombre = GestorDB.obtenerUsuarioEntrenador(db,et.getText().toString(),entrenador);
                 lista.clear();
                 if (!pNombre.equals("")) {
                     lista.add(pNombre);
@@ -92,10 +99,60 @@ public class ListaAtletas extends AppCompatActivity {
                         lista.add(usuario);
                     }
                 }
+                et.setText("");
 
                 eladaptador.notifyDataSetChanged();
             }
         });
+
+        ImageButton btAgregar = findViewById(R.id.btAgregar); //boton para agregarAtletas
+        btAgregar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EditText et = findViewById(R.id.NombreAgregarAtleta);
+                if(GestorDB.comprobarUsuario(db,et.getText().toString()) != null){ // si el usuario existe
+                    if(!GestorDB.atletaTieneEntrenador(db,et.getText().toString())){
+                        //actualizamos la columna entrenador del atleta
+                        GestorDB.meterAtletaAEntrenador(db,entrenador,et.getText().toString());
+
+                        // refrescamos la lista de atletas
+                        lista.clear();
+                        List<String> usuarios = GestorDB.obtenerListaUsuarios(db,entrenador);
+                        for (String usuario:usuarios){
+                            lista.add(usuario);
+                        }
+                        et.setText("");
+
+                        eladaptador.notifyDataSetChanged();
+                    }else{
+                        dialogoAlerta dialogo = new dialogoAlerta();
+                        dialogo.setMensaje("El usuario ya tiene un entrenador");
+                        dialogo.show(getSupportFragmentManager(), "etiqueta2");
+                    }
+                }else{
+                    dialogoAlerta dialogo = new dialogoAlerta();
+                    dialogo.setMensaje("El usuario introducido no existe");
+                    dialogo.show(getSupportFragmentManager(), "etiqueta2");
+                }
+            }
+        });
+    }
+
+    private void crearNotificacion(){
+        NotificationManager elManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+        NotificationCompat.Builder elBuilder = new NotificationCompat.Builder(this, "1");
+        elBuilder.setSmallIcon(android.R.drawable.stat_sys_warning);
+        elBuilder.setContentTitle("Entrenamiento añadido");
+        elBuilder.setAutoCancel(true);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel elCanal = new NotificationChannel("1", "NombreCanal", NotificationManager.IMPORTANCE_DEFAULT);
+            elCanal.enableLights(true);
+            elCanal.setLightColor(Color.RED);
+            elCanal.setVibrationPattern(new long[]{0, 1000, 500, 1000});
+            elCanal.enableVibration(true);
+            elManager.createNotificationChannel(elCanal);
+        }
+        elManager.notify(1, elBuilder.build());
     }
 
     public void onChangeThemeClick(MenuItem item) {

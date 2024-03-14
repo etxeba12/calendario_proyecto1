@@ -97,8 +97,7 @@ public class Login extends AppCompatActivity {
                 "('2023-11-23', 'Hombro posterior', 2, 15, 10, 0, 'eider', NULL, NULL), " +
                 "('2023-11-23', 'Gemelo', 2, 15, 10, 0, 'eider', NULL, NULL), " +
                 "('2023-11-23', 'Banca', 3, 10, 10, 0, 'eider', NULL, NULL)");
-        */
-        /*
+
         db.execSQL("INSERT INTO Usuarios (nombreUsuarios, contrasena, entrenador, esEntrenador) VALUES " +
                 "('eider', '1234', 'iker', 1), " +
                 "('eufanasio', '1234=', 'iker', 1), " +

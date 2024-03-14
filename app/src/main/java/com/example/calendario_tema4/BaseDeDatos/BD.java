@@ -56,7 +56,31 @@ public class BD extends SQLiteOpenHelper {
         return esEntrenador;
     }
 
+    public boolean atletaTieneEntrenador(SQLiteDatabase db, String pAtleta) {
+        // Define la consulta SQL para verificar si el atleta tiene un entrenador
+        String query = "SELECT entrenador FROM Usuarios WHERE nombreUsuarios=? AND entrenador != ''";
+        String[] selectionArgs = {pAtleta};
+
+        // Ejecuta la consulta
+        Cursor cursor = db.rawQuery(query, selectionArgs);
+
+        // Verifica si se encontró algún resultado
+        boolean tieneEntrenador = false;
+        if (cursor != null && cursor.moveToFirst()) {
+            tieneEntrenador = true;
+        }
+
+        // Cierra el cursor
+        if (cursor != null) {
+            cursor.close();
+        }
+
+        return tieneEntrenador;
+    }
+
+
     public void meterUsuario(SQLiteDatabase db,String nombreUsuario, String pContraseña, String pEntrenador, Integer pEsEntrenador){
+        //Agregar un usuario a la base datos
         ContentValues values = new ContentValues();
         values.put("nombreUsuarios", nombreUsuario);
         values.put("contrasena", pContraseña);
@@ -80,6 +104,18 @@ public class BD extends SQLiteOpenHelper {
         return false;
     }
 
+    public void meterAtletaAEntrenador(SQLiteDatabase db,String pEntrenador, String pAtleta){
+        //Agregar un Entrenador a un atleta
+        ContentValues values = new ContentValues();
+        values.put("entrenador", pEntrenador);
+
+        String whereClause = "nombreUsuarios=?";
+        String[] whereArgs = {pAtleta};
+
+        // Ejecuta la consulta para actualizar el registro del usuario
+        int rowsAffected = db.update("Usuarios", values, whereClause, whereArgs);
+    }
+
     public List<String> obtenerListaUsuarios(SQLiteDatabase db, String nombreEntrenador) {
         List<String> usuarios = new ArrayList<>(); // la lista donde guardar los usuarios
 
@@ -97,11 +133,11 @@ public class BD extends SQLiteOpenHelper {
 
         return usuarios;
     }
-    public String obtenerUsuarioEntrenador(SQLiteDatabase db,String pNombre) {
+    public String obtenerUsuarioEntrenador(SQLiteDatabase db,String pNombre,String pEntrenador) {
         String usuario = "";// la lista donde guardar los usuarios
 
-        String query = "SELECT nombreUsuarios FROM Usuarios WHERE nombreUsuarios = ?";
-        String[] selectionArgs = {pNombre};
+        String query = "SELECT nombreUsuarios FROM Usuarios WHERE nombreUsuarios = ? AND entrenador=?";
+        String[] selectionArgs = {pNombre,pEntrenador};
         Cursor cursor = db.rawQuery(query, selectionArgs);
 
         if (cursor.moveToFirst()) {

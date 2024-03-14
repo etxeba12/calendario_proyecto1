@@ -32,7 +32,7 @@
             android:text="@string/listaUsuarios"
             android:gravity="center_vertical"
             android:textSize="20sp"
-            android:layout_marginRight="20dp"/>
+            android:layout_marginEnd="20dp"/>
 
         <EditText
             android:id="@+id/NombreAtleta"
@@ -59,4 +59,39 @@
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginBottom="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <EditText
+            android:id="@+id/NombreAgregarAtleta"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:inputType="text"
+            android:hint="Agregar atleta" />
+
+        <ImageButton
+            android:id="@+id/btAgregar"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/borde_redondo_azul"
+            android:src="@android:drawable/ic_menu_add"
+            android:scaleType="fitCenter"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+
+    </LinearLayout>
+
+
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
