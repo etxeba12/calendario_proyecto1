@@ -20,12 +20,13 @@ public class adaptadorRecycler extends RecyclerView.Adapter<ElViewHolder> {
     private String mes;
     private String año;
     private String atleta;
+    private String nombreEntrenador;
     private String idioma;
 
     private int tema;
 
 
-    public adaptadorRecycler(String[] entrenos, int[] imagenes, ActivityResultLauncher<Intent> activityLauncher,String pMes,String pAño,String pAtleta,String pIdioma,int pTema){
+    public adaptadorRecycler(String[] entrenos, int[] imagenes, ActivityResultLauncher<Intent> activityLauncher,String pMes,String pAño,String pAtleta,String pIdioma,int pTema,String pEntrenador){
         losEntrenamientos=entrenos;
         lasImagenes=imagenes;
         seleccionados = new boolean[entrenos.length];
@@ -35,10 +36,11 @@ public class adaptadorRecycler extends RecyclerView.Adapter<ElViewHolder> {
         this.atleta = pAtleta;
         this.idioma = pIdioma;
         this.tema=pTema;
+        this.nombreEntrenador = pEntrenador;
     }
     public ElViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View elLayoutDeCadaItem = LayoutInflater.from(parent.getContext()).inflate(R.layout.dia_entrenamiento,parent,false);
-        ElViewHolder evh = new ElViewHolder(elLayoutDeCadaItem,activityLauncher,mes,año,atleta,idioma,tema);
+        ElViewHolder evh = new ElViewHolder(elLayoutDeCadaItem,activityLauncher,mes,año,atleta,idioma,tema,nombreEntrenador);
         evh.seleccion = seleccionados;
         return evh;
     }

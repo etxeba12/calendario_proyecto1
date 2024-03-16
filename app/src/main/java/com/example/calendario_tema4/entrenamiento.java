@@ -22,10 +22,12 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 
 import com.example.calendario_tema4.BaseDeDatos.BD;
 import com.example.calendario_tema4.calendarioReycler.MainActivity;
 import com.example.calendario_tema4.dialogos.dialogoAlerta;
+import com.example.calendario_tema4.dialogos.salirAplicacion;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -39,7 +41,7 @@ public class entrenamiento extends AppCompatActivity {
     private SQLiteDatabase db;
 
     private String nombreAtleta;
-
+    private String nombreEntrenador;
     private String idioma;
 
     private String fecha;
@@ -57,6 +59,7 @@ public class entrenamiento extends AppCompatActivity {
             idioma = extras.getString("idioma");
             String pMes= extras.getString("mes");
             String pAño= extras.getString("año");
+            String pEntrenador = extras.getString("entrenador");
             String pDia= extras.getString("diaSeleccionado");
             String pAtleta= extras.getString("atleta");
             tema = extras.getInt("tema");
@@ -64,6 +67,7 @@ public class entrenamiento extends AppCompatActivity {
             mes = pMes;
             fecha = pAño+"-"+pMes+"-"+pDia;
             nombreAtleta = pAtleta;
+            nombreEntrenador =pEntrenador;
         }
         if(idioma != null){
             cambiarIdioma(idioma);
@@ -175,6 +179,19 @@ public class entrenamiento extends AppCompatActivity {
             }
         });
     }
+
+    /*
+    public void onBackPressed() {
+        Intent i = new Intent(entrenamiento.this, MainActivity.class);
+        i.putExtra("atleta",nombreAtleta);
+        i.putExtra("idioma",idioma);
+        i.putExtra("entrenador",nombreEntrenador);
+        i.putExtra("tema",tema);
+        startActivity(i);
+        finish();
+    }
+    */
+
 
     protected void cambiarIdioma(String idioma){
         Locale nuevaloc = new Locale(idioma);

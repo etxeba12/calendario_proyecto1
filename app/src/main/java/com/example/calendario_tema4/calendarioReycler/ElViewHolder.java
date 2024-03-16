@@ -31,13 +31,14 @@ public class ElViewHolder extends RecyclerView.ViewHolder {
     private String mes;
     private String año;
     private String atleta;
+    private String nombreEntrenador;
     private int tema;
 
     private String idioma;
 
     private final ActivityResultLauncher<Intent> activityLauncher;
 
-    public ElViewHolder(@NonNull View itemView, ActivityResultLauncher<Intent> activityLauncher,String pMes,String pAño,String pAtleta,String pIdioma,int pTema) {
+    public ElViewHolder(@NonNull View itemView, ActivityResultLauncher<Intent> activityLauncher,String pMes,String pAño,String pAtleta,String pIdioma,int pTema,String pEntrenador) {
         super(itemView);
         textoDia = itemView.findViewById(R.id.textoDia);
         imagenPesa = itemView.findViewById(R.id.imagenPesa);
@@ -47,6 +48,7 @@ public class ElViewHolder extends RecyclerView.ViewHolder {
         this.atleta = pAtleta;
         this.idioma = pIdioma;
         this.tema = pTema;
+        this.nombreEntrenador = pEntrenador;
 
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,6 +61,7 @@ public class ElViewHolder extends RecyclerView.ViewHolder {
                 intent.putExtra("año", año);
                 intent.putExtra("diaSeleccionado", String.format("%02d", position + 1));
                 intent.putExtra("atleta", atleta);
+                intent.putExtra("entrenador",nombreEntrenador);
                 intent.putExtra("idioma",idioma);
                 intent.putExtra("tema",tema);
 

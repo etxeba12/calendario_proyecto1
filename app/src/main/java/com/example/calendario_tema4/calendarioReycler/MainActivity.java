@@ -82,11 +82,6 @@ public class MainActivity extends AppCompatActivity {
             String pEntrenador = extras.getString("entrenador");
             tema = extras.getInt("tema");
 
-            Log.d("patata","idioma:" +idioma);
-            Log.d("patata", "idioma:" + pMes);
-            Log.d("patata", "idioma:" + pAño);
-            Log.d("patata", "idioma:" + pNombre);
-            Log.d("patata", "idioma:" +pEntrenador);
             setTheme(tema);
             if(pMes != null && pAño != null){
                 if (pMes.length() == 2) { // Verificar si pMes tiene dos dígitos
@@ -99,12 +94,6 @@ public class MainActivity extends AppCompatActivity {
             nombreAtleta = pNombre;
             nombreEntrenador = pEntrenador;
             fecha = "00/" + mes + "/"+ año;
-
-            Log.d("patata","idioma:" +fecha);
-            Log.d("patata", "idioma:" + mes);
-            Log.d("patata", "idioma:" + año);
-            Log.d("patata", "idioma:" + nombreAtleta);
-            Log.d("patata", "idioma:" +nombreEntrenador);
         }
         if(idioma != null){
             cambiarIdioma(idioma);
@@ -201,7 +190,7 @@ public class MainActivity extends AppCompatActivity {
         });
         //Botones navegación
 
-        adaptadorRecycler eladaptador = new adaptadorRecycler(diaMes,imagenes,activityLauncher,mes,año,nombreAtleta,idioma,tema);
+        adaptadorRecycler eladaptador = new adaptadorRecycler(diaMes,imagenes,activityLauncher,mes,año,nombreAtleta,idioma,tema,nombreEntrenador);
         laLista.setAdapter(eladaptador);
 
         RecyclerView.LayoutManager elLayoutRejillaIgual= new GridLayoutManager(this,7,GridLayoutManager.VERTICAL,false);
@@ -303,8 +292,8 @@ public class MainActivity extends AppCompatActivity {
             i.putExtra("atleta",nombreAtleta);
             i.putExtra("entrenador",nombreEntrenador);
             i.putExtra("tema",tema);
-            startActivity(i);
             finish();
+            startActivity(i);
             return true;
         }
 

@@ -25,12 +25,14 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
+import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.calendario_tema4.BaseDeDatos.BD;
 import com.example.calendario_tema4.calendarioReycler.MainActivity;
 import com.example.calendario_tema4.dialogos.dialogoAlerta;
+import com.example.calendario_tema4.dialogos.salirAplicacion;
 
 import java.util.List;
 import java.util.Locale;
@@ -177,6 +179,12 @@ public class ListaAtletas extends AppCompatActivity {
             elManager.createNotificationChannel(elCanal);
         }
         elManager.notify(1, elBuilder.build());
+    }
+
+    public void onBackPressed() {
+        DialogFragment dialogoAlerta = new salirAplicacion();
+        dialogoAlerta.show(getSupportFragmentManager(), "etiqueta");
+
     }
 
     public void onChangeThemeClick(MenuItem item) {
