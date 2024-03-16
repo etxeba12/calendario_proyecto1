@@ -81,18 +81,30 @@ public class MainActivity extends AppCompatActivity {
             String pNombre = extras.getString("atleta");
             String pEntrenador = extras.getString("entrenador");
             tema = extras.getInt("tema");
+
+            Log.d("patata","idioma:" +idioma);
+            Log.d("patata", "idioma:" + pMes);
+            Log.d("patata", "idioma:" + pAño);
+            Log.d("patata", "idioma:" + pNombre);
+            Log.d("patata", "idioma:" +pEntrenador);
             setTheme(tema);
             if(pMes != null && pAño != null){
-                if(Integer.parseInt(pMes)<10){
-                    mes = "0"+pMes;
-                }else{
-                    mes =pMes;
+                if (pMes.length() == 2) { // Verificar si pMes tiene dos dígitos
+                    mes = pMes;
+                } else if (pMes.length() == 1) { // Si pMes tiene un solo dígito, agregar un 0 al principio
+                    mes = "0" + pMes;
                 }
                 año=pAño;
             }
             nombreAtleta = pNombre;
             nombreEntrenador = pEntrenador;
             fecha = "00/" + mes + "/"+ año;
+
+            Log.d("patata","idioma:" +fecha);
+            Log.d("patata", "idioma:" + mes);
+            Log.d("patata", "idioma:" + año);
+            Log.d("patata", "idioma:" + nombreAtleta);
+            Log.d("patata", "idioma:" +nombreEntrenador);
         }
         if(idioma != null){
             cambiarIdioma(idioma);
@@ -284,39 +296,42 @@ public class MainActivity extends AppCompatActivity {
         if(id == R.id.castellano){
             Log.d("entro","he entrado");
             idioma = "es";
-            getIntent().putExtra("idioma",idioma);
-            getIntent().putExtra("mes",mes);
-            getIntent().putExtra("año",año);
-            getIntent().putExtra("atleta",nombreAtleta);
-            getIntent().putExtra("entrenador",nombreEntrenador);
-            getIntent().putExtra("tema",tema);
+            Intent i =   new Intent(MainActivity.this,MainActivity.class);
+            i.putExtra("idioma",idioma);
+            i.putExtra("mes",mes);
+            i.putExtra("año",año);
+            i.putExtra("atleta",nombreAtleta);
+            i.putExtra("entrenador",nombreEntrenador);
+            i.putExtra("tema",tema);
+            startActivity(i);
             finish();
-            startActivity(getIntent());
             return true;
         }
 
         else if(id == R.id.euskera){
             idioma = "eu";
-            getIntent().putExtra("idioma",idioma);
-            getIntent().putExtra("mes",mes);
-            getIntent().putExtra("año",año);
-            getIntent().putExtra("atleta",nombreAtleta);
-            getIntent().putExtra("entrenador",nombreEntrenador);
-            getIntent().putExtra("tema",tema);
+            Intent i =   new Intent(MainActivity.this,MainActivity.class);
+            i.putExtra("idioma",idioma);
+            i.putExtra("mes",mes);
+            i.putExtra("año",año);
+            i.putExtra("atleta",nombreAtleta);
+            i.putExtra("entrenador",nombreEntrenador);
+            i.putExtra("tema",tema);
+            startActivity(i);
             finish();
-            startActivity(getIntent());
             return true;
         }
         else if(id == R.id.ingles){
             idioma = "en";
-            getIntent().putExtra("idioma",idioma);
-            getIntent().putExtra("mes",mes);
-            getIntent().putExtra("año",año);
-            getIntent().putExtra("atleta",nombreAtleta);
-            getIntent().putExtra("entrenador",nombreEntrenador);
-            getIntent().putExtra("tema",tema);
+            Intent i =   new Intent(MainActivity.this,MainActivity.class);
+            i.putExtra("idioma",idioma);
+            i.putExtra("mes",mes);
+            i.putExtra("año",año);
+            i.putExtra("atleta",nombreAtleta);
+            i.putExtra("entrenador",nombreEntrenador);
+            i.putExtra("tema",tema);
+            startActivity(i);
             finish();
-            startActivity(getIntent());
             return true;
         }
         return super.onOptionsItemSelected(item);
