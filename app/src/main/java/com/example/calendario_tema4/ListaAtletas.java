@@ -20,6 +20,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -84,6 +85,26 @@ public class ListaAtletas extends AppCompatActivity {
             }
         });
 
+        //para borrar atletas al clickar mucho en uno
+        lalista.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                // cogemos el nombre del atleta
+                String nombreAtleta = (String) adapterView.getItemAtPosition(i);
+                lista.clear();
+                GestorDB.borrarEntrenadorDeAtleta(db,nombreAtleta);
+                List<String> usuarios = GestorDB.obtenerListaUsuarios(db,entrenador);
+                for (String usuario:usuarios){
+                    lista.add(usuario);
+                }
+                eladaptador.notifyDataSetChanged();
+                int tiempo= Toast.LENGTH_SHORT;
+                Toast aviso = Toast.makeText(ListaAtletas.this, "Se ha eliminado el atleta", tiempo);
+                aviso.show();
+                return true;
+            }
+        });
+
         Button btBuscar = findViewById(R.id.btBuscar);
         btBuscar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -124,6 +145,9 @@ public class ListaAtletas extends AppCompatActivity {
                         et.setText("");
 
                         eladaptador.notifyDataSetChanged();
+                        int tiempo= Toast.LENGTH_SHORT;
+                        Toast aviso = Toast.makeText(ListaAtletas.this, "Se ha añadido el atleta", tiempo);
+                        aviso.show();
                     }else{
                         dialogoAlerta dialogo = new dialogoAlerta();
                         dialogo.setMensaje("El usuario ya tiene un entrenador");

@@ -15,6 +15,8 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.net.Uri;
 import android.view.MenuItem;
 
 import android.app.Activity;
@@ -34,6 +36,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.ImageButton;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -131,6 +134,15 @@ public class MainActivity extends AppCompatActivity {
         }
         //Conseguir y poner fecha
 
+        ImageButton btAbrirNav = findViewById(R.id.btAbrirNavegador);
+        btAbrirNav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.google.com/search?client=firefox-b-d&q=gimnasios+cerca+de+mi"));
+                startActivity(i);
+            }
+        });
+
         //Botones navegación
         Button botonAnt = findViewById(R.id.bt_ant);
         botonAnt.setOnClickListener(new View.OnClickListener() {
@@ -182,6 +194,9 @@ public class MainActivity extends AppCompatActivity {
 
         RecyclerView.LayoutManager elLayoutRejillaIgual= new GridLayoutManager(this,7,GridLayoutManager.VERTICAL,false);
         laLista.setLayoutManager(elLayoutRejillaIgual);
+
+
+
 
         //crearNotificacion();
     }

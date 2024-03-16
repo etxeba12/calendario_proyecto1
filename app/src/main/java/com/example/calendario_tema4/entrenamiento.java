@@ -15,14 +15,17 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.calendario_tema4.BaseDeDatos.BD;
 import com.example.calendario_tema4.calendarioReycler.MainActivity;
+import com.example.calendario_tema4.dialogos.dialogoAlerta;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -126,15 +129,49 @@ public class entrenamiento extends AppCompatActivity {
            }
        });
 
+
+
         lista = GestorDB.conseguirNombreEjer(db,fecha,nombreAtleta);
         eladaptador = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,lista);
         ListView lalista = (ListView) findViewById(R.id.listaEjercicios);
         lalista.setAdapter(eladaptador);
 
-        lalista.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+        //para borrar atletas al clickar mucho en uno
+        lalista.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id){
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                // cogemos el nombre del atleta
+                String nombreEjer = (String) adapterView.getItemAtPosition(i);
+                lista.clear();
+                GestorDB.borrarEjercicio(db,fecha,nombreAtleta,nombreEjer);
+                List<String> ejercicios = GestorDB.conseguirNombreEjer(db,fecha,nombreAtleta);
+                for (String ejercicio:ejercicios){
+                    lista.add(ejercicio);
+                }
+                eladaptador.notifyDataSetChanged();
+                int tiempo= Toast.LENGTH_SHORT;
+                Toast aviso = Toast.makeText(entrenamiento.this, "Se ha eliminado el ejercicio", tiempo);
+                aviso.show();
+                return true;
+            }
+        });
 
+        ImageButton btAgregar = findViewById(R.id.btAgregar); //boton para agregarAtletas
+        btAgregar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EditText et = findViewById(R.id.NombreAgregarEjer);
+                lista.clear();
+                GestorDB.agregarEjercicio(db,fecha,nombreAtleta,et.getText().toString());
+                List<String> ejercicios = GestorDB.conseguirNombreEjer(db,fecha,nombreAtleta);
+                for (String ejercicio:ejercicios){
+                    Log.d("ejer",ejercicio);
+                    lista.add(ejercicio);
+                }
+                eladaptador.notifyDataSetChanged();
+                int tiempo= Toast.LENGTH_SHORT;
+                Toast aviso = Toast.makeText(entrenamiento.this, "Ejercicio añadido correctamente", tiempo);
+                aviso.show();
             }
         });
     }

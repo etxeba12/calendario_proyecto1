@@ -55,13 +55,18 @@ public class BD extends SQLiteOpenHelper {
         c.close(); // Cerramos el cursor después de usarlo
         return esEntrenador;
     }
+    public void borrarEntrenadorDeAtleta(SQLiteDatabase db, String pAtleta) {
+        // actualizar la columna entrenador a ''
+        String query = "UPDATE Usuarios SET entrenador = '' WHERE nombreUsuarios = ?";
+        String[] whereArgs = {pAtleta};
 
+        // Ejecuta la consulta de actualización
+        db.execSQL(query, whereArgs);
+    }
     public boolean atletaTieneEntrenador(SQLiteDatabase db, String pAtleta) {
         // Define la consulta SQL para verificar si el atleta tiene un entrenador
         String query = "SELECT entrenador FROM Usuarios WHERE nombreUsuarios=? AND entrenador != ''";
         String[] selectionArgs = {pAtleta};
-
-        // Ejecuta la consulta
         Cursor cursor = db.rawQuery(query, selectionArgs);
 
         // Verifica si se encontró algún resultado
@@ -69,8 +74,6 @@ public class BD extends SQLiteOpenHelper {
         if (cursor != null && cursor.moveToFirst()) {
             tieneEntrenador = true;
         }
-
-        // Cierra el cursor
         if (cursor != null) {
             cursor.close();
         }
@@ -146,6 +149,23 @@ public class BD extends SQLiteOpenHelper {
         cursor.close();
 
         return usuario;
+    }
+
+    public void borrarEjercicio(SQLiteDatabase db, String pFecha, String pNombreUsuario, String nombreEjercicioABorrar) {
+        String tabla = "calendario";
+        String whereClause = "fecha = ? AND cliente_nombre = ? AND nombreEjercicio = ?";
+        String[] whereArgs = {pFecha, pNombreUsuario, nombreEjercicioABorrar};
+
+        db.delete(tabla, whereClause, whereArgs);
+    }
+
+    public void agregarEjercicio(SQLiteDatabase db, String pFecha, String pNombreUsuario, String nombreEjercicio) {
+        ContentValues values = new ContentValues();
+        values.put("fecha", pFecha);
+        values.put("cliente_nombre", pNombreUsuario);
+        values.put("nombreEjercicio", nombreEjercicio);
+
+        db.insert("calendario", null, values);
     }
 
 
