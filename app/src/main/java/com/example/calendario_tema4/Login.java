@@ -1,5 +1,7 @@
 package com.example.calendario_tema4;
 
+import static java.sql.Types.NULL;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -47,8 +49,8 @@ public class Login extends AppCompatActivity {
         db = GestorDB.getWritableDatabase();
 
         setSupportActionBar(findViewById(R.id.labarra));
-        //db.delete("Calendario", "series > ?", new String[] {"0"});
-        if(!GestorDB.tablaExiste(db,"calendario")){
+
+        if(GestorDB.tablaEstaVacia(db,"calendario")){
             db.execSQL("INSERT INTO calendario (fecha, nombreEjercicio, series, repeticiones, RPE, kilos, cliente_nombre, kilosCliente, RPECliente) VALUES " +
                     "('2024-03-19', 'Comp SQ', 4, 4, 5, 180, 'manuel', ' 0 0 0 0', ' 0 0 0 0'), " +
                     "('2024-03-19', '320 BP', 3, 2, 6, 100, 'manuel', ' 0 0 0', ' 0 0 0'), " +
@@ -65,7 +67,7 @@ public class Login extends AppCompatActivity {
                     "('2024-03-01', 'Deficit DL', 5, 5, 5, 140, 'manuel', NULL, NULL) ");
 
         }
-        if(!GestorDB.tablaExiste(db,"Usuarios")){
+        if(GestorDB.tablaEstaVacia(db,"Usuarios")){
             db.execSQL("INSERT INTO Usuarios (nombreUsuarios, contrasena, entrenador, esEntrenador) VALUES " +
                     "('eider', '1234', 'iker', 1), " +
                     "('eufanasio', '1234', 'iker', 1), " +

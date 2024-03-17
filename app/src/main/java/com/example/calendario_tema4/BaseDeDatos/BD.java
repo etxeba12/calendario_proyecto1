@@ -168,17 +168,19 @@ public class BD extends SQLiteOpenHelper {
         db.insert("calendario", null, values);
     }
 
-    public boolean tablaExiste(SQLiteDatabase db, String nombreTabla) {
-        boolean tablaExiste = false;
+    public boolean tablaEstaVacia(SQLiteDatabase db, String nombreTabla) {
+        boolean tablaVacia = true;
         Cursor cursor = null;
-        // Realizar una consulta para verificar la existencia de la tabla
-        String query = "SELECT name FROM sqlite_master WHERE type='table' AND name=?";
-        cursor = db.rawQuery(query, new String[]{nombreTabla});
-        //Comprobar si existe
-        if (cursor != null && cursor.getCount() > 0) {
-            tablaExiste = true;
+        String query = "SELECT COUNT(*) FROM " + nombreTabla;
+        cursor = db.rawQuery(query, null);
+        if (cursor != null) {
+            cursor.moveToFirst();
+            int rowCount = cursor.getInt(0);
+            // Verificar si el número de filas es cero
+            tablaVacia = (rowCount == 0);
+            cursor.close(); // Cerrar el cursor después de usarlo
         }
-        return tablaExiste;
+        return tablaVacia;
     }
 
 
