@@ -170,7 +170,7 @@ public class entrenamiento extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 EditText et = findViewById(R.id.NombreAgregarEjer);
-                if(et.getText().toString() != ""){
+                if(!et.getText().toString().equals("")){
                     lista.clear();
                     GestorDB.agregarEjercicio(db,fecha,nombreAtleta,et.getText().toString());
                     List<String> ejercicios = GestorDB.conseguirNombreEjer(db,fecha,nombreAtleta);

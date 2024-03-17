@@ -13,5 +13,7 @@
     <string name="btGuardar"> Guardar </string>
     <string name="listaUsuarios">Lista de atletas:</string>
     <string name="btBuscar">Buscar</string>
+    <string name="agregarEjer">Agregar ejercicio</string>
+    <string name="agregarAtleta"> Agregar atleta</string>
 
 </resources>

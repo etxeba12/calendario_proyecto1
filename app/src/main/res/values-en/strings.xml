@@ -14,4 +14,6 @@
     <string name="btGuardar">Save</string>
     <string name="listaUsuarios">athletes list:</string>
     <string name="btBuscar">Search</string>
+    <string name="agregarEjer">Add exercise</string>
+    <string name="agregarAtleta">Add athlete</string>
 </resources>

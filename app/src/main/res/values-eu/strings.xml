@@ -14,4 +14,6 @@
     <string name="btGuardar">Gorde</string>
     <string name="listaUsuarios">Atleta zerrenda:</string>
     <string name="btBuscar">Bilatu</string>
+    <string name="agregarEjer">Ariketa gehitu</string>
+    <string name="agregarAtleta">Atleta gehitu</string>
 </resources>
