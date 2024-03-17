@@ -6,6 +6,7 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.SwitchCompat;
@@ -17,6 +18,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.net.Uri;
+import android.util.AttributeSet;
 import android.view.MenuItem;
 
 import android.app.Activity;
@@ -45,6 +47,7 @@ import com.example.calendario_tema4.BaseDeDatos.BD;
 import com.example.calendario_tema4.ListaAtletas;
 import com.example.calendario_tema4.R;
 import com.example.calendario_tema4.calendarioReycler.adaptadorRecycler;
+import com.example.calendario_tema4.dialogos.dialogoAlerta;
 import com.example.calendario_tema4.dialogos.salirAplicacion;
 
 import java.text.DateFormatSymbols;
@@ -197,9 +200,6 @@ public class MainActivity extends AppCompatActivity {
         laLista.setLayoutManager(elLayoutRejillaIgual);
 
 
-
-
-        //crearNotificacion();
     }
 
     private final ActivityResultLauncher<Intent> activityLauncher = registerForActivityResult(
@@ -207,10 +207,8 @@ public class MainActivity extends AppCompatActivity {
             new ActivityResultCallback<ActivityResult>() {
                 @Override
                 public void onActivityResult(ActivityResult result) {
-                    // Aquí puedes manejar el resultado de la actividad si es necesario
-                    if (result.getResultCode() == Activity.RESULT_OK) {
-                        // Puedes realizar acciones adicionales si es necesario
-                    }
+                    // para recrear la actividad al agregar ejercicios en un dia en concreto
+                    recreate();
                 }
             });
     private void solicitarPermisosNotificaciones(){
@@ -218,23 +216,6 @@ public class MainActivity extends AppCompatActivity {
             //PEDIR EL PERMISO
             ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.POST_NOTIFICATIONS}, 11);
         }
-    }
-
-    private void crearNotificacion(){
-        NotificationManager elManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
-        NotificationCompat.Builder elBuilder = new NotificationCompat.Builder(this, "1");
-        elBuilder.setSmallIcon(android.R.drawable.stat_sys_warning);
-        elBuilder.setContentTitle("Entrenamiento añadido");
-        elBuilder.setAutoCancel(true);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel elCanal = new NotificationChannel("1", "NombreCanal", NotificationManager.IMPORTANCE_DEFAULT);
-            elCanal.enableLights(true);
-            elCanal.setLightColor(Color.RED);
-            elCanal.setVibrationPattern(new long[]{0, 1000, 500, 1000});
-            elCanal.enableVibration(true);
-            elManager.createNotificationChannel(elCanal);
-        }
-        elManager.notify(1, elBuilder.build());
     }
     private String consigueFecha(){
         Date fechaActual = new Date();

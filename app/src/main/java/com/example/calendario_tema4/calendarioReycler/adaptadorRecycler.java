@@ -54,12 +54,6 @@ public class adaptadorRecycler extends RecyclerView.Adapter<ElViewHolder> {
         return losEntrenamientos.length;
     }
 
-    public String getDiaSeleccionado(int position) {
-        if (position >= 0 && position < losEntrenamientos.length) {
-            return losEntrenamientos[position];
-        }
-        return null;
-    }
 
 
 }

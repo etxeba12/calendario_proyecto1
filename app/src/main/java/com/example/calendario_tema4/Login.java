@@ -48,29 +48,32 @@ public class Login extends AppCompatActivity {
 
         setSupportActionBar(findViewById(R.id.labarra));
         //db.delete("Calendario", "series > ?", new String[] {"0"});
-        /*
-        db.execSQL("INSERT INTO calendario (fecha, nombreEjercicio, series, repeticiones, RPE, kilos, cliente_nombre, kilosCliente, RPECliente) VALUES " +
-                "('2024-03-19', 'Comp SQ', 4, 4, 5, 180, 'manuel', ' 0 0 0 0', ' 0 0 0 0'), " +
-                "('2024-03-19', '320 BP', 3, 2, 6, 100, 'manuel', ' 0 0 0', ' 0 0 0'), " +
-                "('2024-03-19', 'Empuje vertical', 4, 10, 9, 100, 'manuel', ' 0 0 0 0', ' 0 0 0 0'), " +
-                "('2024-03-19', 'Extensión de triceps', 3, 12, 10, 100, 'manuel', ' 0 0 0', ' 0 0 0'), " +
-                "('2024-03-14', 'Comp BP', 3, 3, 6, 110, 'manuel', ' 115 110 110', ' 5 5 6'), " +
-                "('2024-03-14', '303 DL', 4, 5, 7, 200, 'manuel', ' 0 0 0 0', ' 0 0 0 0'), " +
-                "('2024-03-14', 'Remo T', 4, 12, 8, 200, 'manuel', ' 0 0 0 0', ' 0 0 0 0'), " +
-                "('2024-03-16', 'Biceps', 5, 12, 10, 200, 'manuel', ' 0 0 0 0 0', ' 0 0 0 0 0'), " +
-                "('2024-03-16', 'PIN SQ', 1, 3, 5, 0, 'manuel', ' 100', ' 5'), " +
-                "('2024-03-16', 'PIN SQ 2', 1, 3, 6, 0, 'manuel', ' 105', ' 5'), " +
-                "('2024-03-16', 'PIN SQ 3', 1, 3, 7, 0, 'manuel', ' 110', ' 5'), " +
-                "('2024-03-01', 'Larsen BP', 4, 4, 5, 0, 'manuel', NULL, NULL), " +
-                "('2024-03-01', 'Deficit DL', 5, 5, 5, 140, 'manuel', NULL, NULL) ");
+        if(!GestorDB.tablaExiste(db,"calendario")){
+            db.execSQL("INSERT INTO calendario (fecha, nombreEjercicio, series, repeticiones, RPE, kilos, cliente_nombre, kilosCliente, RPECliente) VALUES " +
+                    "('2024-03-19', 'Comp SQ', 4, 4, 5, 180, 'manuel', ' 0 0 0 0', ' 0 0 0 0'), " +
+                    "('2024-03-19', '320 BP', 3, 2, 6, 100, 'manuel', ' 0 0 0', ' 0 0 0'), " +
+                    "('2024-03-19', 'Empuje vertical', 4, 10, 9, 100, 'manuel', ' 0 0 0 0', ' 0 0 0 0'), " +
+                    "('2024-03-19', 'Extensión de triceps', 3, 12, 10, 100, 'manuel', ' 0 0 0', ' 0 0 0'), " +
+                    "('2024-03-14', 'Comp BP', 3, 3, 6, 110, 'manuel', ' 115 110 110', ' 5 5 6'), " +
+                    "('2024-03-14', '303 DL', 4, 5, 7, 200, 'manuel', ' 0 0 0 0', ' 0 0 0 0'), " +
+                    "('2024-03-14', 'Remo T', 4, 12, 8, 200, 'manuel', ' 0 0 0 0', ' 0 0 0 0'), " +
+                    "('2024-03-16', 'Biceps', 5, 12, 10, 200, 'manuel', ' 0 0 0 0 0', ' 0 0 0 0 0'), " +
+                    "('2024-03-16', 'PIN SQ', 1, 3, 5, 0, 'manuel', ' 100', ' 5'), " +
+                    "('2024-03-16', 'PIN SQ 2', 1, 3, 6, 0, 'manuel', ' 105', ' 5'), " +
+                    "('2024-03-16', 'PIN SQ 3', 1, 3, 7, 0, 'manuel', ' 110', ' 5'), " +
+                    "('2024-03-01', 'Larsen BP', 4, 4, 5, 0, 'manuel', NULL, NULL), " +
+                    "('2024-03-01', 'Deficit DL', 5, 5, 5, 140, 'manuel', NULL, NULL) ");
 
-        db.execSQL("INSERT INTO Usuarios (nombreUsuarios, contrasena, entrenador, esEntrenador) VALUES " +
-                "('eider', '1234', 'iker', 1), " +
-                "('eufanasio', '1234', 'iker', 1), " +
-                "('iker', '1234', '', 1), "+
-                "('manuel', '1234', 'iker', 0), " +
-                "('pedro', '1234', 'iker', 0)");
-        */
+        }
+        if(!GestorDB.tablaExiste(db,"Usuarios")){
+            db.execSQL("INSERT INTO Usuarios (nombreUsuarios, contrasena, entrenador, esEntrenador) VALUES " +
+                    "('eider', '1234', 'iker', 1), " +
+                    "('eufanasio', '1234', 'iker', 1), " +
+                    "('iker', '1234', '', 1), "+
+                    "('manuel', '1234', 'iker', 0), " +
+                    "('pedro', '1234', 'iker', 0)");
+        }
+
 
         Button btLogin = findViewById(R.id.LoginBoton);
         btLogin.setOnClickListener(new View.OnClickListener() {

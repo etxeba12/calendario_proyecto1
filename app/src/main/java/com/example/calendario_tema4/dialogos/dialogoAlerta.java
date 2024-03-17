@@ -18,7 +18,7 @@ public class dialogoAlerta extends DialogFragment {
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         super.onCreateDialog(savedInstanceState);
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle("Mensaje de despedida")
+        builder.setTitle("Mensaje de aviso")
                 .setMessage(mensaje)
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {

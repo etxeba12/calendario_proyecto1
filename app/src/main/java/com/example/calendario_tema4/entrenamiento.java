@@ -1,10 +1,14 @@
 package com.example.calendario_tema4;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
@@ -22,6 +26,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 import androidx.fragment.app.DialogFragment;
 
 import com.example.calendario_tema4.BaseDeDatos.BD;
@@ -165,32 +170,43 @@ public class entrenamiento extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 EditText et = findViewById(R.id.NombreAgregarEjer);
-                lista.clear();
-                GestorDB.agregarEjercicio(db,fecha,nombreAtleta,et.getText().toString());
-                List<String> ejercicios = GestorDB.conseguirNombreEjer(db,fecha,nombreAtleta);
-                for (String ejercicio:ejercicios){
-                    Log.d("ejer",ejercicio);
-                    lista.add(ejercicio);
+                if(et.getText().toString() != ""){
+                    lista.clear();
+                    GestorDB.agregarEjercicio(db,fecha,nombreAtleta,et.getText().toString());
+                    List<String> ejercicios = GestorDB.conseguirNombreEjer(db,fecha,nombreAtleta);
+                    for (String ejercicio:ejercicios){
+                        Log.d("ejer",ejercicio);
+                        lista.add(ejercicio);
+                    }
+                    eladaptador.notifyDataSetChanged();
+                    crearNotificacion();
+                }else{
+                    dialogoAlerta dialogo = new dialogoAlerta();
+                    dialogo.setMensaje("El ejercicio no puede estar vacio");
+                    dialogo.show(getSupportFragmentManager(), "etiqueta2");
                 }
-                eladaptador.notifyDataSetChanged();
-                int tiempo= Toast.LENGTH_SHORT;
-                Toast aviso = Toast.makeText(entrenamiento.this, "Ejercicio añadido correctamente", tiempo);
-                aviso.show();
+
             }
         });
     }
 
-    /*
-    public void onBackPressed() {
-        Intent i = new Intent(entrenamiento.this, MainActivity.class);
-        i.putExtra("atleta",nombreAtleta);
-        i.putExtra("idioma",idioma);
-        i.putExtra("entrenador",nombreEntrenador);
-        i.putExtra("tema",tema);
-        startActivity(i);
-        finish();
+    private void crearNotificacion(){
+        NotificationManager elManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+        NotificationCompat.Builder elBuilder = new NotificationCompat.Builder(this, "1");
+        elBuilder.setSmallIcon(android.R.drawable.stat_sys_warning);
+        elBuilder.setContentTitle("Entrenamiento añadido");
+        elBuilder.setAutoCancel(true);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel elCanal = new NotificationChannel("1", "NombreCanal", NotificationManager.IMPORTANCE_DEFAULT);
+            elCanal.enableLights(true);
+            elCanal.setLightColor(Color.RED);
+            elCanal.setVibrationPattern(new long[]{0, 1000, 500, 1000});
+            elCanal.enableVibration(true);
+            elManager.createNotificationChannel(elCanal);
+        }
+        elManager.notify(1, elBuilder.build());
     }
-    */
+
 
 
     protected void cambiarIdioma(String idioma){
@@ -204,5 +220,7 @@ public class entrenamiento extends AppCompatActivity {
         Context context = getBaseContext().createConfigurationContext(configuration);
         getBaseContext().getResources().updateConfiguration(configuration, context.getResources().getDisplayMetrics());
     }
+
+
 
 }

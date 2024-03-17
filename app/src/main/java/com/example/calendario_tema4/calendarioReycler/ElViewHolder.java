@@ -55,7 +55,6 @@ public class ElViewHolder extends RecyclerView.ViewHolder {
             public void onClick(View view) {
                 int position = getAdapterPosition();
 
-
                 Intent intent = new Intent(itemView.getContext(), entrenamiento.class);
                 intent.putExtra("mes", mes);
                 intent.putExtra("año", año);

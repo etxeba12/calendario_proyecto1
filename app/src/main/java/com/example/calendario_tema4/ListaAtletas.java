@@ -147,9 +147,7 @@ public class ListaAtletas extends AppCompatActivity {
                         et.setText("");
 
                         eladaptador.notifyDataSetChanged();
-                        int tiempo= Toast.LENGTH_SHORT;
-                        Toast aviso = Toast.makeText(ListaAtletas.this, "Se ha añadido el atleta", tiempo);
-                        aviso.show();
+                        crearNotificacion();
                     }else{
                         dialogoAlerta dialogo = new dialogoAlerta();
                         dialogo.setMensaje("El usuario ya tiene un entrenador");
@@ -168,7 +166,7 @@ public class ListaAtletas extends AppCompatActivity {
         NotificationManager elManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
         NotificationCompat.Builder elBuilder = new NotificationCompat.Builder(this, "1");
         elBuilder.setSmallIcon(android.R.drawable.stat_sys_warning);
-        elBuilder.setContentTitle("Entrenamiento añadido");
+        elBuilder.setContentTitle("Atleta añadido correctamente");
         elBuilder.setAutoCancel(true);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel elCanal = new NotificationChannel("1", "NombreCanal", NotificationManager.IMPORTANCE_DEFAULT);

@@ -168,6 +168,19 @@ public class BD extends SQLiteOpenHelper {
         db.insert("calendario", null, values);
     }
 
+    public boolean tablaExiste(SQLiteDatabase db, String nombreTabla) {
+        boolean tablaExiste = false;
+        Cursor cursor = null;
+        // Realizar una consulta para verificar la existencia de la tabla
+        String query = "SELECT name FROM sqlite_master WHERE type='table' AND name=?";
+        cursor = db.rawQuery(query, new String[]{nombreTabla});
+        //Comprobar si existe
+        if (cursor != null && cursor.getCount() > 0) {
+            tablaExiste = true;
+        }
+        return tablaExiste;
+    }
+
 
     public List<String> conseguirNombreEjer(SQLiteDatabase db,String pFecha,String pNombreUsuario) {
         List<String> nombreEjercicios = new ArrayList<>(); // la lista donde guardar los usuarios
